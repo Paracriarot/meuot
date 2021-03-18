@@ -83,10 +83,10 @@ void ProtocolGame::login(const std::string& name, uint32_t accountId, OperatingS
 		}
 
 		if (g_game.getGameState() == GAME_STATE_CLOSING && !player->hasFlag(PlayerFlag_CanAlwaysLogin)) {
-			disconnectClient("O servidor está sendo reiniciado.\nPor favor, tente novamente mais tarde.\nwww.soulface.com");
+			disconnectClient("O servidor está sendo reiniciado. Por favor, tente novamente mais tarde.\nwww.soulface.com");
 			return;
 		}
-n
+
 		if (g_game.getGameState() == GAME_STATE_CLOSED && !player->hasFlag(PlayerFlag_CanAlwaysLogin)) {
 			disconnectClient("O servidor está fechado.\nPor favor, tente novamente mais tarde.\nwww.soulface.com");
 			return;

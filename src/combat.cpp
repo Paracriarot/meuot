@@ -669,7 +669,7 @@ void Combat::addDistanceEffect(Creature* caster, const Position& fromPos, const 
 				effect = CONST_ANI_WHIRLWINDCLUB;
 				break;
             case WEAPON_FIST:
-                effect = NM_SHOOT_LARGEROCK;
+                effect = CONST_ANI_NONE;
                 break;
 			default:
 				effect = CONST_ANI_NONE;

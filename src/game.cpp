@@ -3378,7 +3378,7 @@ void Game::playerRequestRemoveVip(uint32_t playerId, uint32_t guid)
 
 	player->removeVIP(guid);
 }
-f
+
 void Game::playerRequestEditVip(uint32_t playerId, uint32_t guid, const std::string& description, uint32_t icon, bool notify)
 {
 	Player* player = getPlayerByID(playerId);
@@ -4301,7 +4301,7 @@ bool Game::combatChangeHealth(Creature* attacker, Creature* target, CombatDamage
 							if (attacker) {
 								ss << " devido a ";
 								if (attacker == target) {
-									ss << (targetPlayer ? (targetPlayer->getSex() == PLAYERSEX_FEMALE ? "seu próprio ataque" : "seu próprio ataque") : "seu próprio ataque);
+									ss << (targetPlayer ? (targetPlayer->getSex() == PLAYERSEX_FEMALE ? "seu próprio ataque" : "seu próprio ataque") : "seu próprio ataque");
 								} else {
 									ss << "um ataque de " << attacker->getNameDescription();
 								}

@@ -507,7 +507,7 @@ void Actions::showUseHotkeyMessage(Player* player, const Item* item, uint32_t co
 	} else if (count == 1) {
 		ss << "Usando o último(a) " << item->getName() << "...";
 	} else {
-		ss << "Usando um(a) ' << item->getPluralName() << " dos " << count << '...";
+		ss << "Usando um(a) " << item->getPluralName() << ' dos " << count << '...";
 	}
 	player->sendTextMessage(MESSAGE_INFO_DESCR, ss.str());
 }
