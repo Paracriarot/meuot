@@ -109,7 +109,7 @@ std::string Player::getDescription(int32_t lookDistance) const
 	std::ostringstream s;
 
 	if (lookDistance == -1) {
-		s << "você mesmo. (Level " << level << ') [Reset 0] {Idade 0}.";
+		s << "você mesmo. (Level " << level << ') [Reset 0] {Idade 0}.';
 
 		if (group->access) {
 			s << " Você é " << group->name << '.';
@@ -121,7 +121,7 @@ std::string Player::getDescription(int32_t lookDistance) const
 	} else {
 		s << name;
 		if (!group->access) {
-			s << " (Level " << level << ') [Reset 0] {Idade 0}.";
+			s << " (Level " << level << ') [Reset 0] {Idade 0}.';
 		}
 		s << '.';
 
