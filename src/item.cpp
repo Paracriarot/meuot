@@ -914,7 +914,7 @@ std::string Item::getDescription(const ItemType& it, int32_t lookDistance,
 				if (item) {
 					tmpSubType = item->getSubType();
 				}
-				s << ". " << (it.stackable && tmpSubType > 1 ? "They" : "It") << " can only be used by ";
+				s << ". " << (it.stackable && tmpSubType > 1 ? "Eles" : "Ele") << " só pode ser usado por ";
 
 				const VocSpellMap& vocMap = rune->getVocMap();
 				std::vector<Vocation*> showVocMap;
@@ -933,31 +933,31 @@ std::string Item::getDescription(const ItemType& it, int32_t lookDistance,
 					while (vocIt != vocLast) {
 						s << asLowerCaseString((*vocIt)->getVocName()) << "s";
 						if (++vocIt == vocLast) {
-							s << " and ";
+							s << " e ";
 						} else {
 							s << ", ";
 						}
 					}
 					s << asLowerCaseString((*vocLast)->getVocName()) << "s";
 				} else {
-					s << "players";
+					s << "jogadores";
 				}
 
-				s << " with";
+				s << " com";
 
 				if (it.runeLevel > 0) {
-					s << " level " << it.runeLevel;
+					s << " nível " << it.runeLevel;
 				}
 
 				if (it.runeMagLevel > 0) {
 					if (it.runeLevel > 0) {
-						s << " and";
+						s << " e";
 					}
 
 					s << " magic level " << it.runeMagLevel;
 				}
 
-				s << " or higher";
+				s << " ou acima";
 			}
 		}
 	} else if (it.weaponType != WEAPON_NONE) {
@@ -1502,7 +1502,7 @@ std::string Item::getDescription(const ItemType& it, int32_t lookDistance,
 			} else if (it.abilities->invisible) {
 				s << " (invisibility)";
 			} else if (it.abilities->regeneration) {
-				s << " (faster regeneration)";
+				s << " (rapida regeneração)";
 			} else if (it.abilities->manaShield) {
 				s << " (mana shield)";
 			} else {
@@ -1520,10 +1520,10 @@ std::string Item::getDescription(const ItemType& it, int32_t lookDistance,
 					const std::string& itemName = items[subType].name;
 					s << " of " << (!itemName.empty() ? itemName : "unknown");
 				} else {
-					s << ". It is empty";
+					s << ". Está vazio";
 				}
 			} else if (it.isSplash()) {
-				s << " of ";
+				s << " de ";
 
 				if (subType > 0 && !items[subType].name.empty()) {
 					s << items[subType].name;
@@ -1539,72 +1539,72 @@ std::string Item::getDescription(const ItemType& it, int32_t lookDistance,
 						if (!text->empty()) {
 							const std::string& writer = item->getWriter();
 							if (!writer.empty()) {
-								s << writer << " wrote";
+								s << writer << " escreveu";
 								time_t date = item->getDate();
 								if (date != 0) {
-									s << " on " << formatDateShort(date);
+									s << " em " << formatDateShort(date);
 								}
 								s << ": ";
 							} else {
-								s << "You read: ";
+								s << "Você lê: ";
 							}
 							s << *text;
 						} else {
-							s << "Nothing is written on it";
+							s << "Nada está escrito nele.";
 						}
 					} else {
-						s << "Nothing is written on it";
+						s << "Nada está escrito nele.";
 					}
 				} else {
-					s << "You are too far away to read it";
+					s << "Você está muito longe para lê-lo.";
 				}
 			} else if (it.levelDoor != 0 && item) {
 				uint16_t actionId = item->getActionId();
 				if (actionId >= it.levelDoor) {
-					s << " for level " << (actionId - it.levelDoor);
+					s << " para o nível " << (actionId - it.levelDoor);
 				}
 			}
 		}
 	}
 
 	if (it.showCharges) {
-		s << " that has " << subType << " charge" << (subType != 1 ? "s" : "") << " left";
+		s << " que tem " << subType << " carga" << (subType != 1 ? "s" : "") << " e faltam";
 	}
 
 	if (it.showDuration) {
 		if (item && item->hasAttribute(ITEM_ATTRIBUTE_DURATION)) {
 			uint32_t duration = item->getDuration() / 1000;
-			s << " that will expire in ";
+			s << " que vai expirar em ";
 
 			if (duration >= 86400) {
 				uint16_t days = duration / 86400;
 				uint16_t hours = (duration % 86400) / 3600;
-				s << days << " day" << (days != 1 ? "s" : "");
+				s << days << " dia" << (days != 1 ? "s" : "");
 
 				if (hours > 0) {
-					s << " and " << hours << " hour" << (hours != 1 ? "s" : "");
+					s << " e em " << hours << " hora" << (hours != 1 ? "s" : "");
 				}
 			} else if (duration >= 3600) {
 				uint16_t hours = duration / 3600;
 				uint16_t minutes = (duration % 3600) / 60;
-				s << hours << " hour" << (hours != 1 ? "s" : "");
+				s << hours << " hors" << (hours != 1 ? "s" : "");
 
 				if (minutes > 0) {
-					s << " and " << minutes << " minute" << (minutes != 1 ? "s" : "");
+					s << " e " << minutes << " minuto" << (minutes != 1 ? "s" : "");
 				}
 			} else if (duration >= 60) {
 				uint16_t minutes = duration / 60;
-				s << minutes << " minute" << (minutes != 1 ? "s" : "");
+				s << minutes << " minuto" << (minutes != 1 ? "s" : "");
 				uint16_t seconds = duration % 60;
 
 				if (seconds > 0) {
-					s << " and " << seconds << " second" << (seconds != 1 ? "s" : "");
+					s << " e " << seconds << " segundo" << (seconds != 1 ? "s" : "");
 				}
 			} else {
-				s << duration << " second" << (duration != 1 ? "s" : "");
+				s << duration << " segundo" << (duration != 1 ? "s" : "");
 			}
 		} else {
-			s << " that is brand-new";
+			s << " que nunca foi usado";
 		}
 	}
 
@@ -1621,7 +1621,7 @@ std::string Item::getDescription(const ItemType& it, int32_t lookDistance,
 	}
 
 	if (it.wieldInfo != 0) {
-		s << std::endl << "It can only be wielded properly by ";
+		s << std::endl << "Ele só pode ser usado por ";
 
 		if (it.wieldInfo & WIELDINFO_PREMIUM) {
 			s << "premium ";
@@ -1630,21 +1630,21 @@ std::string Item::getDescription(const ItemType& it, int32_t lookDistance,
 		if (!it.vocationString.empty()) {
 			s << it.vocationString;
 		} else {
-			s << "players";
+			s << "jogadores";
 		}
 
 		if (it.wieldInfo & WIELDINFO_LEVEL) {
-			s << " of level " << it.minReqLevel << " or higher";
+			s << " de nível " << it.minReqLevel << " ou mais";
 		}
 
 		if (it.wieldInfo & WIELDINFO_MAGLV) {
 			if (it.wieldInfo & WIELDINFO_LEVEL) {
-				s << " and";
+				s << " e";
 			} else {
-				s << " of";
+				s << " de";
 			}
 
-			s << " magic level " << it.minReqMagicLevel << " or higher";
+			s << " magic level " << it.minReqMagicLevel << " ou mais";
 		}
 
 		s << '.';
@@ -1732,9 +1732,9 @@ std::string Item::getWeightDescription(const ItemType& it, uint32_t weight, uint
 {
 	std::ostringstream ss;
 	if (it.stackable && count > 1 && it.showCount != 0) {
-		ss << "They weigh ";
+		ss << "Eles pesam ";
 	} else {
-		ss << "It weighs ";
+		ss << "Pesa ";
 	}
 
 	if (weight < 10) {

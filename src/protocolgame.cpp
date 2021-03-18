@@ -73,27 +73,27 @@ void ProtocolGame::login(const std::string& name, uint32_t accountId, OperatingS
 		player->setID();
 
 		if (!IOLoginData::preloadPlayer(player, name)) {
-			disconnectClient("Your character could not be loaded.");
+			disconnectClient("Seu personagem não pode ser carregado.");
 			return;
 		}
 
 		if (IOBan::isPlayerNamelocked(player->getGUID())) {
-			disconnectClient("Your character has been namelocked.");
+			disconnectClient("Seu personagem está utilizando um nome não permitido.");
 			return;
 		}
 
 		if (g_game.getGameState() == GAME_STATE_CLOSING && !player->hasFlag(PlayerFlag_CanAlwaysLogin)) {
-			disconnectClient("The game is just going down.\nPlease try again later.");
+			disconnectClient("O servidor está sendo reiniciado.\nPor favor, tente novamente mais tarde.\nwww.soulface.com");
 			return;
 		}
-
+n
 		if (g_game.getGameState() == GAME_STATE_CLOSED && !player->hasFlag(PlayerFlag_CanAlwaysLogin)) {
-			disconnectClient("Server is currently closed.\nPlease try again later.");
+			disconnectClient("O servidor está fechado.\nPor favor, tente novamente mais tarde.\nwww.soulface.com");
 			return;
 		}
 
 		if (g_config.getBoolean(ConfigManager::ONE_PLAYER_ON_ACCOUNT) && player->getAccountType() < ACCOUNT_TYPE_GAMEMASTER && g_game.getPlayerByAccount(player->getAccount())) {
-			disconnectClient("You may only login with one character\nof your account at the same time.");
+			disconnectClient("Você só pode entrar em um personagem ao mesmo tempo.");
 			return;
 		}
 
@@ -106,9 +106,9 @@ void ProtocolGame::login(const std::string& name, uint32_t accountId, OperatingS
 
 				std::ostringstream ss;
 				if (banInfo.expiresAt > 0) {
-					ss << "Your account has been banned until " << formatDateShort(banInfo.expiresAt) << " by " << banInfo.bannedBy << ".\n\nReason specified:\n" << banInfo.reason;
+					ss << "Sua conta foi banida até " << formatDateShort(banInfo.expiresAt) << " por " << banInfo.bannedBy << ".\n\nMotivo:\n" << banInfo.reason;
 				} else {
-					ss << "Your account has been permanently banned by " << banInfo.bannedBy << ".\n\nReason specified:\n" << banInfo.reason;
+					ss << "Sua conta foi permanentemente banida por " << banInfo.bannedBy << ".\n\nMotivo:\n" << banInfo.reason;
 				}
 				disconnectClient(ss.str());
 				return;
@@ -134,13 +134,13 @@ void ProtocolGame::login(const std::string& name, uint32_t accountId, OperatingS
 		}
 
 		if (!IOLoginData::loadPlayerById(player, player->getGUID())) {
-			disconnectClient("Your character could not be loaded.");
+			disconnectClient("Seu personagem não pode ser conectado.");
 			return;
 		}
 
 		// New Prey
 		if (!IOLoginData::loadPlayerPreyData(player)) {
-			std::cout << "Prey data could not be loaded" << std::endl;
+			std::cout << "o Prey está desativado." << std::endl;
 			return;
 		};
 
@@ -148,7 +148,7 @@ void ProtocolGame::login(const std::string& name, uint32_t accountId, OperatingS
 
 		if (!g_game.placeCreature(player, player->getLoginPosition())) {
 			if (!g_game.placeCreature(player, player->getTemplePosition(), false, true)) {
-				disconnectClient("Temple position is wrong. Contact the administrator.");
+				disconnectClient("A posição do templo está errada. Entre em contato com o administrador.");
 				return;
 			}
 		}
@@ -163,7 +163,7 @@ void ProtocolGame::login(const std::string& name, uint32_t accountId, OperatingS
 	} else {
 		if (eventConnect != 0 || !g_config.getBoolean(ConfigManager::REPLACE_KICK_ON_LOGIN)) {
 			//Already trying to connect
-			disconnectClient("You are already logged in.");
+			disconnectClient("Você já está conectado.");
 			return;
 		}
 
@@ -185,7 +185,7 @@ void ProtocolGame::connect(uint32_t playerId, OperatingSystem_t operatingSystem)
 
 	Player* foundPlayer = g_game.getPlayerByID(playerId);
 	if (!foundPlayer || foundPlayer->client) {
-		disconnectClient("You are already logged in.");
+		disconnectClient("Você já está conectado.");
 		return;
 	}
 
@@ -293,13 +293,13 @@ void ProtocolGame::onRecvFirstMessage(NetworkMessage& msg)
 	std::string sessionKey = msg.getString();
 	size_t pos = sessionKey.find('\n');
 	if (pos == std::string::npos) {
-		disconnectClient("You must enter your account name.");
+		disconnectClient("Você deve digitar o nome da sua conta.");
 		return;
 	}
 
 	std::string accountName = sessionKey.substr(0, pos);
 	if (accountName.empty()) {
-		disconnectClient("You must enter your account name.");
+		disconnectClient("Você deve digitar o nome da sua conta.");
 		return;
 	}
 
@@ -315,18 +315,18 @@ void ProtocolGame::onRecvFirstMessage(NetworkMessage& msg)
 
 	if (version < g_config.getNumber(ConfigManager::VERSION_MIN) || version > g_config.getNumber(ConfigManager::VERSION_MAX)) {
 		std::ostringstream ss;
-		ss << "Only clients with protocol " << g_config.getString(ConfigManager::VERSION_STR) << " allowed!";
+		ss << "Apenas clientes com a versão " << g_config.getString(ConfigManager::VERSION_STR) << " é permitido!";
 		disconnectClient(ss.str());
 		return;
 	}
 
 	if (g_game.getGameState() == GAME_STATE_STARTUP) {
-		disconnectClient("Gameworld is starting up. Please wait.");
+		disconnectClient("O servidor está reiniciando. Aguarde.");
 		return;
 	}
 
 	if (g_game.getGameState() == GAME_STATE_MAINTAIN) {
-		disconnectClient("Gameworld is under maintenance. Please re-connect in a while.");
+		disconnectClient("O servidor está em manuntenção. Por favor, tente novamente mais tarde.\nwww.soulface.com");
 		return;
 	}
 
@@ -337,14 +337,14 @@ void ProtocolGame::onRecvFirstMessage(NetworkMessage& msg)
 		}
 
 		std::ostringstream ss;
-		ss << "Your IP has been banned until " << formatDateShort(banInfo.expiresAt) << " by " << banInfo.bannedBy << ".\n\nReason specified:\n" << banInfo.reason;
+		ss << "Seu IP foi banido até " << formatDateShort(banInfo.expiresAt) << " por " << banInfo.bannedBy << ".\n\nMotivo:\n" << banInfo.reason;
 		disconnectClient(ss.str());
 		return;
 	}
 
 	uint32_t accountId = IOLoginData::gameworldAuthentication(accountName, password, characterName);
 	if (accountId == 0) {
-		disconnectClient("Account name or password is not correct.");
+		disconnectClient("Nome da conta ou senha não está correto.");
 		return;
 	}
 
@@ -3492,8 +3492,16 @@ void ProtocolGame::AddPlayerStats(NetworkMessage& msg)
 {
 	msg.addByte(0xA0);
 
-	msg.add<uint16_t>(std::min<int32_t>(player->getHealth(), std::numeric_limits<uint16_t>::max()));
-	msg.add<uint16_t>(std::min<int32_t>(player->getMaxHealth(), std::numeric_limits<uint16_t>::max()));
+    if (player->getMaxHealth() > 0)
+    {
+        msg.add<uint16_t>(std::min<int32_t>(player->getHealth() * 100 / player->getMaxHealth(), std::numeric_limits<uint16_t>::max()));
+        msg.add<uint16_t>(100);
+    }
+    else
+    {
+        msg.add<uint16_t>(0);
+        msg.add<uint16_t>(0);
+    }
 
 	msg.add<uint32_t>(player->getFreeCapacity());
 	if (version < 1150) {
@@ -3513,8 +3521,16 @@ void ProtocolGame::AddPlayerStats(NetworkMessage& msg)
 	msg.add<uint16_t>(player->getStoreXpBoost()); // xp boost
 	msg.add<uint16_t>(player->getStaminaXpBoost()); // stamina multiplier (100 = 1.0x)
 
-	msg.add<uint16_t>(std::min<int32_t>(player->getMana(), std::numeric_limits<uint16_t>::max()));
-	msg.add<uint16_t>(std::min<int32_t>(player->getMaxMana(), std::numeric_limits<uint16_t>::max()));
+    if (player->getMaxMana() > 0)
+    {
+        msg.add<uint16_t>(std::min<int32_t>(player->getMana() * 100 / player->getMaxMana(), std::numeric_limits<uint16_t>::max()));
+        msg.add<uint16_t>(100);
+    }
+    else
+    {
+        msg.add<uint16_t>(0);
+        msg.add<uint16_t>(0);
+    }
 
 	if (version < 1200) {
 		msg.addByte(std::min<uint32_t>(player->getMagicLevel(), std::numeric_limits<uint8_t>::max()));
@@ -3633,7 +3649,7 @@ void ProtocolGame::sendImbuementWindow(Item* item)
 
 	std::vector<Imbuement*> imbuements = g_imbuements->getImbuements(player, item);
 	if (!itemHasImbue && imbuements.empty()) {
-		player->sendTextMessage(MESSAGE_EVENT_ADVANCE, "You did not collect enough knowledge from the ancient Shapers. Visit the Shaper temple in Thais for help.");
+		player->sendTextMessage(MESSAGE_EVENT_ADVANCE, "Você não tem conhecimento suficiente. Visite o Jordan no sul [V] de Wisland para obter ajuda.");
 		return;
 	}
 	// Seting imbuing item

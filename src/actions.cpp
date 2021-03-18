@@ -503,11 +503,11 @@ void Actions::showUseHotkeyMessage(Player* player, const Item* item, uint32_t co
 
 	const ItemType& it = Item::items[item->getID()];
 	if (!it.showCount) {
-		ss << "Using one of " << item->getName() << "...";
+		ss << "Usando um(a) " << item->getName() << "...";
 	} else if (count == 1) {
-		ss << "Using the last " << item->getName() << "...";
+		ss << "Usando o último(a) " << item->getName() << "...";
 	} else {
-		ss << "Using one of " << count << ' ' << item->getPluralName() << "...";
+		ss << "Usando um(a) ' << item->getPluralName() << " dos " << count << '...";
 	}
 	player->sendTextMessage(MESSAGE_INFO_DESCR, ss.str());
 }
@@ -551,23 +551,23 @@ bool useImbueShrine(Player* player, Item*, const Position&, Thing* target, const
 {
 	Item* item = target ? target->getItem() : nullptr;
 	if (!item) {
-		player->sendTextMessage(MESSAGE_STATUS_SMALL, "This item is not imbuable.");
+		player->sendTextMessage(MESSAGE_STATUS_SMALL, "Este item não é imbuído.");
 		return false;
 	}
 
 	const ItemType& it = Item::items[item->getID()];
 	if(it.imbuingSlots <= 0 ) {
-		player->sendTextMessage(MESSAGE_STATUS_SMALL, "This item is not imbuable.");
+		player->sendTextMessage(MESSAGE_STATUS_SMALL, "Este item não é imbuído.");
 		return false;		
 	}
 
 	if (item->getTopParent() != player) {
-		player->sendTextMessage(MESSAGE_STATUS_SMALL, "You have to pick up the item to imbue it.");
+		player->sendTextMessage(MESSAGE_STATUS_SMALL, "Você tem que pegar o item para imbuí-lo.");
 		return false;
 	}
 	
 	if (!(toPos.y & 0x40)) {
-		player->sendTextMessage(MESSAGE_STATUS_SMALL, "You cannot imbue an equipped item.");
+		player->sendTextMessage(MESSAGE_STATUS_SMALL, "Você não pode imbuir um item equipado.");
 		return false;
 	}
 
