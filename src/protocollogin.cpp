@@ -49,7 +49,7 @@ void ProtocolLogin::getCharacterList(const std::string& accountName, const std::
 	//dispatcher thread
 	Account account;
 	if (!IOLoginData::loginserverAuthentication(accountName, password, account)) {
-		disconnectClient("O nome da conta ou senha n√£o est√° correto.", version);
+		disconnectClient("O nome da conta ou senha n„o est· correto.", version);
 		return;
 	}
 
@@ -132,7 +132,7 @@ void ProtocolLogin::onRecvFirstMessage(NetworkMessage& msg)
 
 	if (version <= 760) {
 		std::ostringstream ss;
-		ss << "Apenas clientes com a vers√£o " << g_config.getString(ConfigManager::VERSION_STR) << " √© permitido!";
+		ss << "Apenas clientes com a vers„o " << g_config.getString(ConfigManager::VERSION_STR) << " È permitido!";
 		disconnectClient(ss.str(), version);
 		return;
 	}
@@ -153,18 +153,18 @@ void ProtocolLogin::onRecvFirstMessage(NetworkMessage& msg)
 
 	if (version < g_config.getNumber(ConfigManager::VERSION_MIN) || version > g_config.getNumber(ConfigManager::VERSION_MAX)) {
 		std::ostringstream ss;
-		ss << "Apenas clientes com a vers√£o " << g_config.getString(ConfigManager::VERSION_STR) << " √© permitido!";
+		ss << "Apenas clientes com a vers„o " << g_config.getString(ConfigManager::VERSION_STR) << " È permitido!";
 		disconnectClient(ss.str(), version);
 		return;
 	}
 
 	if (g_game.getGameState() == GAME_STATE_STARTUP) {
-		disconnectClient("O servidor est√° reiniciando. Aguarde.", version);
+		disconnectClient("O servidor est· reiniciando. Aguarde.", version);
 		return;
 	}
 
 	if (g_game.getGameState() == GAME_STATE_MAINTAIN) {
-		disconnectClient("O servidor est√° em manunten√ß√£o. Por favor, tente novamente mais tarde.\nwww.soulface.com", version);
+		disconnectClient("O servidor est· em manuntenÁ„o. Por favor, tente novamente mais tarde.\nwww.soulface.com", version);
 		return;
 	}
 
@@ -180,20 +180,20 @@ void ProtocolLogin::onRecvFirstMessage(NetworkMessage& msg)
 		}
 
 		std::ostringstream ss;
-		ss << "Seu IP foi banido at√© " << formatDateShort(banInfo.expiresAt) << " por " << banInfo.bannedBy << ".\n\nMotivo:\n" << banInfo.reason;
+		ss << "Seu IP foi banido atÈ " << formatDateShort(banInfo.expiresAt) << " por " << banInfo.bannedBy << ".\n\nMotivo:\n" << banInfo.reason;
 		disconnectClient(ss.str(), version);
 		return;
 	}
 
 	std::string accountName = msg.getString();
 	if (accountName.empty()) {
-		disconnectClient("Nome da conta inv√°lida.", version);
+		disconnectClient("Nome da conta inv·lida.", version);
 		return;
 	}
 
 	std::string password = msg.getString();
 	if (password.empty()) {
-		disconnectClient("Senha inv√°lida.", version);
+		disconnectClient("Senha inv·lida.", version);
 		return;
 	}
 

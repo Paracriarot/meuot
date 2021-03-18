@@ -58,7 +58,7 @@ void Party::disband()
 	for (Player* member : memberList) {
 		member->setParty(nullptr);
 		member->sendClosePrivate(CHANNEL_PARTY);
-		member->sendTextMessage(MESSAGE_INFO_DESCR, "VocÃª foi expulso do grupo.");
+		member->sendTextMessage(MESSAGE_INFO_DESCR, "Você foi expulso do grupo.");
 	}
 
 	for (Player* member : memberList) {
@@ -124,7 +124,7 @@ bool Party::leaveParty(Player* player)
 	player->sendCreatureSkull(player);
 	player->sendPlayerPartyIcons(leader);
 
-	player->sendTextMessage(MESSAGE_INFO_DESCR, "VocÃª saiu do grupo.");
+	player->sendTextMessage(MESSAGE_INFO_DESCR, "Você saiu do grupo.");
 
 	updateSharedExperience();
 
@@ -154,7 +154,7 @@ bool Party::passPartyLeadership(Player* player)
 	}
 
 	std::ostringstream ss;
-	ss << player->getName() << " Ã© o novo lÃ­der do grupo.";
+	ss << player->getName() << " é o novo líder do grupo.";
 	broadcastPartyMessage(MESSAGE_INFO_DESCR, ss.str(), true);
 
 	Player* oldLeader = leader;
@@ -177,7 +177,7 @@ bool Party::passPartyLeadership(Player* player)
 	leader->sendCreatureShield(oldLeader);
 	leader->sendCreatureShield(leader);
 
-	player->sendTextMessage(MESSAGE_INFO_DESCR, "VocÃª agora Ã© o novo lÃ­der do grupo.");
+	player->sendTextMessage(MESSAGE_INFO_DESCR, "Você agora é o novo líder do grupo.");
 	return true;
 }
 
@@ -220,7 +220,7 @@ bool Party::joinParty(Player& player)
 
 	const std::string& leaderName = leader->getName();
 	ss.str(std::string());
-	ss << "VocÃª entrou no grupo de " << leaderName << "'" << (leaderName.back() == 's' ? "" : "s") <<
+	ss << "Você entrou no grupo de " << leaderName << "'" << (leaderName.back() == 's' ? "" : "s") <<
 	   ". Abra o canal do grupo para se comunicar com seus companheiros.";
 	player.sendTextMessage(MESSAGE_INFO_DESCR, ss.str());
 	return true;
@@ -298,7 +298,7 @@ bool Party::invitePlayer(Player& player)
 	player.addPartyInvitation(this);
 
 	ss.str(std::string());
-	ss << leader->getName() << " convidou vocÃª para o grupo " << (leader->getSex() == PLAYERSEX_FEMALE ? "dela" : "dele") << ".";
+	ss << leader->getName() << " convidou você para o grupo " << (leader->getSex() == PLAYERSEX_FEMALE ? "dela" : "dele") << ".";
 	player.sendTextMessage(MESSAGE_INFO_DESCR, ss.str());
 	return true;
 }
@@ -363,12 +363,12 @@ bool Party::setSharedExperience(Player* player, bool newSharedExpActive)
 		this->sharedExpEnabled = canEnableSharedExperience();
 
 		if (this->sharedExpEnabled) {
-			leader->sendTextMessage(MESSAGE_INFO_DESCR, "Compartilhamento de experiÃªncia estÃ¡ ativado agora.");
+			leader->sendTextMessage(MESSAGE_INFO_DESCR, "Compartilhamento de experiência está ativado agora.");
 		} else {
-			leader->sendTextMessage(MESSAGE_INFO_DESCR, "Compartilhamento de experiÃªncia foi ativada, mas alguns membros do seu grupo estÃ£o inativos.");
+			leader->sendTextMessage(MESSAGE_INFO_DESCR, "Compartilhamento de experiência foi ativada, mas alguns membros do seu grupo estão inativos.");
 		}
 	} else {
-		leader->sendTextMessage(MESSAGE_INFO_DESCR, "Compartilhamento de experiÃªncia estÃ¡ desativado agora.");
+		leader->sendTextMessage(MESSAGE_INFO_DESCR, "Compartilhamento de experiência está desativado agora.");
 	}
 
 	updateAllPartyIcons();

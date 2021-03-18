@@ -48,7 +48,7 @@ void PrivateChatChannel::invitePlayer(const Player& player, Player& invitePlayer
 	}
 
 	std::ostringstream ss;
-	ss << player.getName() << " estÃ¡ convidando vocÃª para o canal de bate-papo privado.";
+	ss << player.getName() << " está convidando você para o canal de bate-papo privado.";
 	invitePlayer.sendTextMessage(MESSAGE_INFO_DESCR, ss.str());
 
 	ss.str(std::string());
@@ -69,7 +69,7 @@ void PrivateChatChannel::excludePlayer(const Player& player, Player& excludePlay
 	removeUser(excludePlayer);
 
 	std::ostringstream ss;
-	ss << excludePlayer.getName() << " foi excluÃ­do.";
+	ss << excludePlayer.getName() << " foi excluído.";
 	player.sendTextMessage(MESSAGE_INFO_DESCR, ss.str());
 
 	excludePlayer.sendClosePrivate(id);

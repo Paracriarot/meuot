@@ -914,7 +914,7 @@ std::string Item::getDescription(const ItemType& it, int32_t lookDistance,
 				if (item) {
 					tmpSubType = item->getSubType();
 				}
-				s << ". " << (it.stackable && tmpSubType > 1 ? "Eles" : "Ele") << " sÃ³ pode ser usado por ";
+				s << ". " << (it.stackable && tmpSubType > 1 ? "Eles" : "Ele") << " só pode ser usado por ";
 
 				const VocSpellMap& vocMap = rune->getVocMap();
 				std::vector<Vocation*> showVocMap;
@@ -946,7 +946,7 @@ std::string Item::getDescription(const ItemType& it, int32_t lookDistance,
 				s << " com";
 
 				if (it.runeLevel > 0) {
-					s << " nÃ­vel " << it.runeLevel;
+					s << " nível " << it.runeLevel;
 				}
 
 				if (it.runeMagLevel > 0) {
@@ -1502,7 +1502,7 @@ std::string Item::getDescription(const ItemType& it, int32_t lookDistance,
 			} else if (it.abilities->invisible) {
 				s << " (invisibility)";
 			} else if (it.abilities->regeneration) {
-				s << " (rapida regeneraÃ§Ã£o)";
+				s << " (rapida regeneração)";
 			} else if (it.abilities->manaShield) {
 				s << " (mana shield)";
 			} else {
@@ -1520,7 +1520,7 @@ std::string Item::getDescription(const ItemType& it, int32_t lookDistance,
 					const std::string& itemName = items[subType].name;
 					s << " of " << (!itemName.empty() ? itemName : "unknown");
 				} else {
-					s << ". EstÃ¡ vazio";
+					s << ". Está vazio";
 				}
 			} else if (it.isSplash()) {
 				s << " de ";
@@ -1546,22 +1546,22 @@ std::string Item::getDescription(const ItemType& it, int32_t lookDistance,
 								}
 								s << ": ";
 							} else {
-								s << "VocÃª lÃª: ";
+								s << "Você lê: ";
 							}
 							s << *text;
 						} else {
-							s << "Nada estÃ¡ escrito nele.";
+							s << "Nada está escrito nele.";
 						}
 					} else {
-						s << "Nada estÃ¡ escrito nele.";
+						s << "Nada está escrito nele.";
 					}
 				} else {
-					s << "VocÃª estÃ¡ muito longe para lÃª-lo.";
+					s << "Você está muito longe para lê-lo.";
 				}
 			} else if (it.levelDoor != 0 && item) {
 				uint16_t actionId = item->getActionId();
 				if (actionId >= it.levelDoor) {
-					s << " para o nÃ­vel " << (actionId - it.levelDoor);
+					s << " para o nível " << (actionId - it.levelDoor);
 				}
 			}
 		}
@@ -1621,7 +1621,7 @@ std::string Item::getDescription(const ItemType& it, int32_t lookDistance,
 	}
 
 	if (it.wieldInfo != 0) {
-		s << std::endl << "Ele sÃ³ pode ser usado por ";
+		s << std::endl << "Ele só pode ser usado por ";
 
 		if (it.wieldInfo & WIELDINFO_PREMIUM) {
 			s << "premium ";
@@ -1634,7 +1634,7 @@ std::string Item::getDescription(const ItemType& it, int32_t lookDistance,
 		}
 
 		if (it.wieldInfo & WIELDINFO_LEVEL) {
-			s << " de nÃ­vel " << it.minReqLevel << " ou mais";
+			s << " de nível " << it.minReqLevel << " ou mais";
 		}
 
 		if (it.wieldInfo & WIELDINFO_MAGLV) {

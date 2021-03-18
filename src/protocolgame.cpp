@@ -73,27 +73,27 @@ void ProtocolGame::login(const std::string& name, uint32_t accountId, OperatingS
 		player->setID();
 
 		if (!IOLoginData::preloadPlayer(player, name)) {
-			disconnectClient("Seu personagem nÃ£o pode ser carregado.");
+			disconnectClient("Seu personagem não pode ser carregado.");
 			return;
 		}
 
 		if (IOBan::isPlayerNamelocked(player->getGUID())) {
-			disconnectClient("Seu personagem estÃ¡ utilizando um nome nÃ£o permitido.");
+			disconnectClient("Seu personagem está utilizando um nome não permitido.");
 			return;
 		}
 
 		if (g_game.getGameState() == GAME_STATE_CLOSING && !player->hasFlag(PlayerFlag_CanAlwaysLogin)) {
-			disconnectClient("O servidor estÃ¡ sendo reiniciado. Por favor, tente novamente mais tarde.\nwww.soulface.com");
+			disconnectClient("O servidor está sendo reiniciado. Por favor, tente novamente mais tarde.\nwww.soulface.com");
 			return;
 		}
 
 		if (g_game.getGameState() == GAME_STATE_CLOSED && !player->hasFlag(PlayerFlag_CanAlwaysLogin)) {
-			disconnectClient("O servidor estÃ¡ fechado.\nPor favor, tente novamente mais tarde.\nwww.soulface.com");
+			disconnectClient("O servidor está fechado.\nPor favor, tente novamente mais tarde.\nwww.soulface.com");
 			return;
 		}
 
 		if (g_config.getBoolean(ConfigManager::ONE_PLAYER_ON_ACCOUNT) && player->getAccountType() < ACCOUNT_TYPE_GAMEMASTER && g_game.getPlayerByAccount(player->getAccount())) {
-			disconnectClient("VocÃª sÃ³ pode entrar em um personagem ao mesmo tempo.");
+			disconnectClient("Você só pode entrar em um personagem ao mesmo tempo.");
 			return;
 		}
 
@@ -106,7 +106,7 @@ void ProtocolGame::login(const std::string& name, uint32_t accountId, OperatingS
 
 				std::ostringstream ss;
 				if (banInfo.expiresAt > 0) {
-					ss << "Sua conta foi banida atÃ© " << formatDateShort(banInfo.expiresAt) << " por " << banInfo.bannedBy << ".\n\nMotivo:\n" << banInfo.reason;
+					ss << "Sua conta foi banida até " << formatDateShort(banInfo.expiresAt) << " por " << banInfo.bannedBy << ".\n\nMotivo:\n" << banInfo.reason;
 				} else {
 					ss << "Sua conta foi permanentemente banida por " << banInfo.bannedBy << ".\n\nMotivo:\n" << banInfo.reason;
 				}
@@ -134,13 +134,13 @@ void ProtocolGame::login(const std::string& name, uint32_t accountId, OperatingS
 		}
 
 		if (!IOLoginData::loadPlayerById(player, player->getGUID())) {
-			disconnectClient("Seu personagem nÃ£o pode ser conectado.");
+			disconnectClient("Seu personagem não pode ser conectado.");
 			return;
 		}
 
 		// New Prey
 		if (!IOLoginData::loadPlayerPreyData(player)) {
-			std::cout << "o Prey estÃ¡ desativado." << std::endl;
+			std::cout << "o Prey está desativado." << std::endl;
 			return;
 		};
 
@@ -148,7 +148,7 @@ void ProtocolGame::login(const std::string& name, uint32_t accountId, OperatingS
 
 		if (!g_game.placeCreature(player, player->getLoginPosition())) {
 			if (!g_game.placeCreature(player, player->getTemplePosition(), false, true)) {
-				disconnectClient("A posiÃ§Ã£o do templo estÃ¡ errada. Entre em contato com o administrador.");
+				disconnectClient("A posição do templo está errada. Entre em contato com o administrador.");
 				return;
 			}
 		}
@@ -163,7 +163,7 @@ void ProtocolGame::login(const std::string& name, uint32_t accountId, OperatingS
 	} else {
 		if (eventConnect != 0 || !g_config.getBoolean(ConfigManager::REPLACE_KICK_ON_LOGIN)) {
 			//Already trying to connect
-			disconnectClient("VocÃª jÃ¡ estÃ¡ conectado.");
+			disconnectClient("Você já está conectado.");
 			return;
 		}
 
@@ -185,7 +185,7 @@ void ProtocolGame::connect(uint32_t playerId, OperatingSystem_t operatingSystem)
 
 	Player* foundPlayer = g_game.getPlayerByID(playerId);
 	if (!foundPlayer || foundPlayer->client) {
-		disconnectClient("VocÃª jÃ¡ estÃ¡ conectado.");
+		disconnectClient("Você já está conectado.");
 		return;
 	}
 
@@ -293,13 +293,13 @@ void ProtocolGame::onRecvFirstMessage(NetworkMessage& msg)
 	std::string sessionKey = msg.getString();
 	size_t pos = sessionKey.find('\n');
 	if (pos == std::string::npos) {
-		disconnectClient("VocÃª deve digitar o nome da sua conta.");
+		disconnectClient("Você deve digitar o nome da sua conta.");
 		return;
 	}
 
 	std::string accountName = sessionKey.substr(0, pos);
 	if (accountName.empty()) {
-		disconnectClient("VocÃª deve digitar o nome da sua conta.");
+		disconnectClient("Você deve digitar o nome da sua conta.");
 		return;
 	}
 
@@ -315,18 +315,18 @@ void ProtocolGame::onRecvFirstMessage(NetworkMessage& msg)
 
 	if (version < g_config.getNumber(ConfigManager::VERSION_MIN) || version > g_config.getNumber(ConfigManager::VERSION_MAX)) {
 		std::ostringstream ss;
-		ss << "Apenas clientes com a versÃ£o " << g_config.getString(ConfigManager::VERSION_STR) << " Ã© permitido!";
+		ss << "Apenas clientes com a versão " << g_config.getString(ConfigManager::VERSION_STR) << " é permitido!";
 		disconnectClient(ss.str());
 		return;
 	}
 
 	if (g_game.getGameState() == GAME_STATE_STARTUP) {
-		disconnectClient("O servidor estÃ¡ reiniciando. Aguarde.");
+		disconnectClient("O servidor está reiniciando. Aguarde.");
 		return;
 	}
 
 	if (g_game.getGameState() == GAME_STATE_MAINTAIN) {
-		disconnectClient("O servidor estÃ¡ em manuntenÃ§Ã£o. Por favor, tente novamente mais tarde.\nwww.soulface.com");
+		disconnectClient("O servidor está em manuntenção. Por favor, tente novamente mais tarde.\nwww.soulface.com");
 		return;
 	}
 
@@ -337,14 +337,14 @@ void ProtocolGame::onRecvFirstMessage(NetworkMessage& msg)
 		}
 
 		std::ostringstream ss;
-		ss << "Seu IP foi banido atÃ© " << formatDateShort(banInfo.expiresAt) << " por " << banInfo.bannedBy << ".\n\nMotivo:\n" << banInfo.reason;
+		ss << "Seu IP foi banido até " << formatDateShort(banInfo.expiresAt) << " por " << banInfo.bannedBy << ".\n\nMotivo:\n" << banInfo.reason;
 		disconnectClient(ss.str());
 		return;
 	}
 
 	uint32_t accountId = IOLoginData::gameworldAuthentication(accountName, password, characterName);
 	if (accountId == 0) {
-		disconnectClient("Nome da conta ou senha nÃ£o estÃ¡ correto.");
+		disconnectClient("Nome da conta ou senha não está correto.");
 		return;
 	}
 
@@ -1468,7 +1468,7 @@ void ProtocolGame::sendBasicData()
 	if (player->getVocation()->getId() == 0) {
 		msg.addByte(0);
 	} else {
-		msg.addByte(1); // has reached Main (allow player to open Prey window)
+		msg.addByte(0); // has reached Main (allow player to open Prey window)
 	}
 
 	std::list<uint16_t> spellsList = g_spells->getSpellsByVocation(player->getVocationId());
@@ -3649,7 +3649,7 @@ void ProtocolGame::sendImbuementWindow(Item* item)
 
 	std::vector<Imbuement*> imbuements = g_imbuements->getImbuements(player, item);
 	if (!itemHasImbue && imbuements.empty()) {
-		player->sendTextMessage(MESSAGE_EVENT_ADVANCE, "VocÃª nÃ£o tem conhecimento suficiente. Visite o Jordan no sul [V] de Wisland para obter ajuda.");
+		player->sendTextMessage(MESSAGE_EVENT_ADVANCE, "Você não tem conhecimento suficiente. Visite o Jordan no sul [V] de Wisland para obter ajuda.");
 		return;
 	}
 	// Seting imbuing item

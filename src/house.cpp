@@ -90,7 +90,7 @@ void House::setOwner(uint32_t guid, bool updateDatabase/* = true*/, Player* play
 		time_t currentTime = time(nullptr);
 		if (strRentPeriod == "ano") {
 		    currentTime += 24 * 60 * 60 * 365;
-		} else if (strRentPeriod == "mÃªs") {
+		} else if (strRentPeriod == "mês") {
 		    currentTime += 24 * 60 * 60 * 30;
 		} else if (strRentPeriod == "semana") {
 		    currentTime += 24 * 60 * 60 * 7;
@@ -120,13 +120,13 @@ void House::updateDoorDescription() const
 {
 	std::ostringstream ss;
 	if (owner != 0) {
-		ss << "Pertence Ã  casa. '" << houseName << "'. " << ownerName << " Ã© dono dessa casa.";
+		ss << "Pertence à casa. '" << houseName << "'. " << ownerName << " é dono dessa casa.";
 	} else {
-		ss << "Pertence Ã  casa. '" << houseName << "'. NinguÃ©m Ã© dono desta casa.";
+		ss << "Pertence à casa. '" << houseName << "'. Ninguém é dono desta casa.";
 
 		const int32_t housePrice = g_config.getNumber(ConfigManager::HOUSE_PRICE);
 		if (housePrice != -1) {
-			ss << " custa " << (houseTiles.size() * housePrice) << " gold coins.";
+			ss << " Custa " << (houseTiles.size() * housePrice) << " gold coins.";
 		}
 	}
 
@@ -269,7 +269,7 @@ int constructionKits[58][2] = {
 					std::string key = "unWrapId";
 					newItem->setCustomAttribute(key, val);
 					std::ostringstream ss;
-					ss << "Desembrulhe-o em sua prÃ³pria casa para criar um <" << itemName << ">.";
+					ss << "Desembrulhe-o em sua própria casa para criar um <" << itemName << ">.";
 					newItem->setStrAttr(ITEM_ATTRIBUTE_DESCRIPTION, ss.str());
 					moveItemList.push_back(newItem);
 				}
@@ -425,7 +425,7 @@ HouseTransferItem* HouseTransferItem::createHouseTransferItem(House* house)
 	transferItem->setID(ITEM_DOCUMENT_RO);
 	transferItem->setSubType(1);
 	std::ostringstream ss;
-	ss << "Ã‰ um documento de transferÃªncia da casa '" << house->getName() << "'.";
+	ss << "É um documento de transferência da casa '" << house->getName() << "'.";
 	transferItem->setSpecialDescription(ss.str());
 	return transferItem;
 }
@@ -805,7 +805,7 @@ void Houses::payHouses(RentPeriod_t rentPeriod) const
 						break;
 
 					case RENTPERIOD_MONTHLY:
-						period = "do mÃªs";
+						period = "do mês";
 						break;
 
 					case RENTPERIOD_YEARLY:
@@ -817,7 +817,7 @@ void Houses::payHouses(RentPeriod_t rentPeriod) const
 				}
 
 				std::ostringstream ss;
-				ss << "Aviso!\nO aluguel " << period << " de " << house->getRent() << " gold da sua casa \"" << house->getName() << "\" estÃ¡ pago. Pague-o dentro de " << daysLeft << " dias ou vocÃª vai perder a sua casa.";
+				ss << "Aviso!\nO aluguel " << period << " de " << house->getRent() << " gold da sua casa \"" << house->getName() << "\" está pago. Pague-o dentro de " << daysLeft << " dias ou você vai perder a sua casa.";
 				letter->setText(ss.str());
 				g_game.internalAddItem(player.getInbox(), letter, INDEX_WHEREEVER, FLAG_NOLIMIT);
 				house->setPayRentWarnings(house->getPayRentWarnings() + 1);
