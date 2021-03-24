@@ -110,7 +110,8 @@ std::string Player::getDescription(int32_t lookDistance) const
 
 	if (lookDistance == -1) {
 
-		s << "você. (Level " << level << ") [Reset " << getStorageValue(555845,value) << "] {Idade 0}.";
+                int32_t value;
+		s << "você. (Level " << level << ") [Reset " << player->getStorageValue(STORAGEVALUE_RESETS, value) << "] {Idade 0}.";
 
 		if (group->access) {
 			s << " Você é um " << group->name << '.';
