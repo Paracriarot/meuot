@@ -743,9 +743,9 @@ bool ConditionRegeneration::executeCondition(Creature* creature, int32_t interva
 			if (isBuff && realHealthGain > 0) {
 				Player* player = creature->getPlayer();
 				if (player) {
-					std::string healString = std::to_string(realHealthGain) + (realHealthGain != 1 ? " hitpoints." : " hitpoint.");
+					std::string healString = std::to_string(realHealthGain) + (realHealthGain != 1 ? " pontos de vida." : " ponto de vida.");
 
-					TextMessage message(MESSAGE_HEALED, "You were healed for " + healString);
+					TextMessage message(MESSAGE_HEALED, "Você foi curado com " + healString);
 					message.position = player->getPosition();
 					message.primary.value = realHealthGain;
 					message.primary.color = TEXTCOLOR_MAYABLUE;
@@ -756,7 +756,7 @@ bool ConditionRegeneration::executeCondition(Creature* creature, int32_t interva
 					spectators.erase(player);
 					if (!spectators.empty()) {
 						message.type = MESSAGE_HEALED_OTHERS;
-						message.text = player->getName() + " was healed for " + healString;
+						message.text = player->getName() + " foi curado com " + healString;
 						for (Creature* spectator : spectators) {
 							spectator->getPlayer()->sendTextMessage(message);
 						}

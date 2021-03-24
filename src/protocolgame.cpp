@@ -3492,7 +3492,7 @@ void ProtocolGame::AddPlayerStats(NetworkMessage& msg)
 {
 	msg.addByte(0xA0);
 
-    if (player->getMaxHealth() > 0)
+    if (player->getMaxHealth() > 65535)
     {
         msg.add<uint16_t>(std::min<int32_t>(player->getHealth() * 100 / player->getMaxHealth(), std::numeric_limits<uint16_t>::max()));
         msg.add<uint16_t>(100);
@@ -3521,7 +3521,7 @@ void ProtocolGame::AddPlayerStats(NetworkMessage& msg)
 	msg.add<uint16_t>(player->getStoreXpBoost()); // xp boost
 	msg.add<uint16_t>(player->getStaminaXpBoost()); // stamina multiplier (100 = 1.0x)
 
-    if (player->getMaxMana() > 0)
+    if (player->getMaxMana() > 65535)
     {
         msg.add<uint16_t>(std::min<int32_t>(player->getMana() * 100 / player->getMaxMana(), std::numeric_limits<uint16_t>::max()));
         msg.add<uint16_t>(100);
@@ -3649,7 +3649,7 @@ void ProtocolGame::sendImbuementWindow(Item* item)
 
 	std::vector<Imbuement*> imbuements = g_imbuements->getImbuements(player, item);
 	if (!itemHasImbue && imbuements.empty()) {
-		player->sendTextMessage(MESSAGE_EVENT_ADVANCE, "Você não tem conhecimento suficiente. Visite o Jordan no sul [V] de Wisland para obter ajuda.");
+		player->sendTextMessage(MESSAGE_EVENT_ADVANCE, "Você não tem permissão para imbuír. Visite o Jordan no sul [V] de Wisland para obter ajuda.");
 		return;
 	}
 	// Seting imbuing item

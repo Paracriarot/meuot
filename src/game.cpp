@@ -4147,7 +4147,7 @@ bool Game::combatChangeHealth(Creature* attacker, Creature* target, CombatDamage
 			}
 			std::stringstream ss;
 
-			ss << realHealthChange << (realHealthChange != 1 ? " hitpoints." : " hitpoint.");
+			ss << realHealthChange << (realHealthChange != 1 ? " pontos de vida." : " ponto de vida.");
 			std::string damageString = ss.str();
 
 			std::string spectatorMessage;
@@ -4175,7 +4175,7 @@ bool Game::combatChangeHealth(Creature* attacker, Creature* target, CombatDamage
 					} else {
 						ss << "Você foi curado por " << attacker->getNameDescription();
 					}
-					ss << " for " << damageString;
+					ss << " com " << damageString;
 					message.type = MESSAGE_HEALED;
 					message.text = ss.str();
 				} else {
@@ -4191,7 +4191,7 @@ bool Game::combatChangeHealth(Creature* attacker, Creature* target, CombatDamage
 								ss << target->getNameDescription();
 							}
 						}
-						ss << " por " << damageString;
+						ss << " com " << damageString;
 						spectatorMessage = ss.str();
 					}
 					message.type = MESSAGE_HEALED_OTHERS;
@@ -4425,7 +4425,7 @@ bool Game::combatChangeHealth(Creature* attacker, Creature* target, CombatDamage
 		if (message.primary.color != TEXTCOLOR_NONE || message.secondary.color != TEXTCOLOR_NONE) {
 			std::stringstream ss;
 
-			ss << realDamage << (realDamage != 1 ? " hitpoints" : " hitpoint");
+			ss << realDamage << (realDamage != 1 ? " pontos de vida" : " ponto de vida");
 			std::string damageString = ss.str();
 
 			std::string spectatorMessage;
@@ -4443,7 +4443,7 @@ bool Game::combatChangeHealth(Creature* attacker, Creature* target, CombatDamage
 					message.text = ss.str();
 				} else if (tmpPlayer == targetPlayer) {
 					ss.str({});
-					ss << "Você perdeu  " << damageString;
+					ss << "Você perdeu " << damageString;
 					if (!attacker) {
 						ss << '.';
 					} else if (targetPlayer == attackerPlayer) {
@@ -4546,15 +4546,15 @@ bool Game::combatChangeMana(Creature* attacker, Creature* target, CombatDamage& 
 				Player* tmpPlayer = spectator->getPlayer();
 				if (tmpPlayer == attackerPlayer && attackerPlayer != targetPlayer) {
 					message.type = MESSAGE_HEALED;
-					message.text = "Você restaurou " + target->getNameDescription() + " para " + damageString;
+					message.text = "Você restaurou " + target->getNameDescription() + " com " + damageString;
 				} else if (tmpPlayer == targetPlayer) {
 					message.type = MESSAGE_HEALED;
 					if (!attacker) {
-						message.text = "Você restaurou para " + damageString;
+						message.text = "Você restaurou com " + damageString;
 					} else if (targetPlayer == attackerPlayer) {
-						message.text = "Você se restaura para " + damageString;
+						message.text = "Você se restaura com " + damageString;
 					} else {
-						message.text = "Você foi restaurado por " + attacker->getNameDescription() + " para " + damageString;
+						message.text = "Você foi restaurado por " + attacker->getNameDescription() + " com " + damageString;
 					}
 				} else {
 					message.type = MESSAGE_HEALED_OTHERS;
@@ -6154,12 +6154,12 @@ void Game::playerBuyStoreOffer(uint32_t playerId, uint32_t offerId, uint8_t prod
 				playerOutfit.lookType=128; //default citizen
 				playerOutfit.lookAddons=0;
 
-				message << "male.";
+				message << "Homem.";
 			} else {//player is male
 				player->setSex(PLAYERSEX_FEMALE);
 				playerOutfit.lookType=136; //default citizen
 				playerOutfit.lookAddons=0;
-				message << "female.";
+				message << "Mulher.";
 			}
 			playerChangeOutfit(player->getID(),playerOutfit);
 			//TODO: add the other sex equivalent outfits player already have in the current sex.
@@ -6267,22 +6267,22 @@ void Game::playerCoinTransfer(uint32_t playerId, const std::string &receiverName
 		std::stringstream message;
 		DBResult_ptr result = db.storeQuery(query.str());
 		if (!result) {
-			message << "Player \"" << receiverName << "\" doesn't exist.";
+			message << "O personagem \"" << receiverName << "\" não existe.";
 			sender->sendStoreError(STORE_ERROR_TRANSFER, message.str());
 			return;
 		} else {
 			uint32_t receiverAccountId = result->getNumber<uint32_t>("account_id");
 			std::string capitalizedReceiverName = result->getString("name");
 			if (receiverAccountId == 0) {
-				message << "Player \"" << receiverName << "\" doesn't exist.";
+				message << "O personagem \"" << receiverName << "\" não existe.";
 				sender->sendStoreError(STORE_ERROR_TRANSFER, message.str());
 				return;
 			} else if (sender->getAccount() == receiverAccountId) { //sender and receiver are the same
-				message << "You cannot send coins to your own account.";
+				message << "Você não pode enviar moedas para sua própria conta.";
 				sender->sendStoreError(STORE_ERROR_TRANSFER, message.str());
 				return;
 			} else if (IOAccount::getCoinBalance(sender->getAccount()) < amount) {
-				message << "You don't have enough funds to transfer these coins.";
+				message << "Você não tem moedas suficientes para transferir.";
 				sender->sendStoreError(STORE_ERROR_TRANSFER, message.str());
 				return;
 			} else {
@@ -6294,7 +6294,7 @@ void Game::playerCoinTransfer(uint32_t playerId, const std::string &receiverName
 				queryReceiver << "UPDATE `accounts` SET `coins` = `coins` + " << amount << " WHERE `id` = "
 							  << receiverAccountId;
 				if (!transaction.begin()) {
-					sender->sendStoreError(STORE_ERROR_TRANSFER, "Internal error, try again later.");
+					sender->sendStoreError(STORE_ERROR_TRANSFER, "Erro interno, tente novamente depois.");
 					return;
 				}
 
@@ -6303,15 +6303,15 @@ void Game::playerCoinTransfer(uint32_t playerId, const std::string &receiverName
 
 				transaction.commit();
 
-				message << "Transfered to " << capitalizedReceiverName;
+				message << "Transferido para " << capitalizedReceiverName;
 				IOAccount::registerTransaction(sender->getAccount(), -1 * amount, message.str());
 
 				message.str("");
-				message << "Received from" << sender->name;
+				message << "Recebido de " << sender->name;
 				IOAccount::registerTransaction(receiverAccountId, amount, message.str());
 
 				message.str("");
-				message << "You have successfully transfered " << amount << " coins to " << capitalizedReceiverName << ".";
+				message << "Você transferiu " << amount << " moedas para " << capitalizedReceiverName << ".";
 				sender->sendStorePurchaseSuccessful(message.str(), IOAccount::getCoinBalance(sender->getAccount()));
 				if (receiver && !receiver->isOffline()) {
 					receiver->sendCoinBalance();
@@ -6329,7 +6329,7 @@ void Game::playerStoreTransactionHistory(uint32_t playerId, uint32_t page)
 		if (!list.empty()) {
 			player->sendStoreTrasactionHistory(list, page, GameStore::HISTORY_ENTRIES_PER_PAGE);
 		} else {
-			player->sendStoreError(STORE_ERROR_HISTORY, "You don't have any entries yet.");
+			player->sendStoreError(STORE_ERROR_HISTORY, "Você não tem nenhum historico ainda.");
 		}
 	}
 }
@@ -6435,7 +6435,7 @@ void Game::playerAnswerModalWindow(uint32_t playerId, uint32_t modalWindowId, ui
 	// offline training, hardcoded
 	if (modalWindowId == std::numeric_limits<uint32_t>::max()) {
 		if (button == 1) {
-			if (choice == SKILL_SWORD || choice == SKILL_AXE || choice == SKILL_CLUB || choice == SKILL_DISTANCE || choice == SKILL_MAGLEVEL) {
+			if (choice == SKILL_FIST || SKILL_SWORD || choice == SKILL_AXE || choice == SKILL_CLUB || choice == SKILL_DISTANCE || choice == SKILL_MAGLEVEL) {
 				BedItem* bedItem = player->getBedItem();
 				if (bedItem && bedItem->sleep(player)) {
 					player->setOfflineTrainingSkill(choice);

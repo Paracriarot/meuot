@@ -109,10 +109,10 @@ std::string Player::getDescription(int32_t lookDistance) const
 	std::ostringstream s;
 
 	if (lookDistance == -1) {
-		s << "você mesmo. (Level " << level << ") [Reset 0] {Idade 0}.";
+		s << "você. (Level " << level << ") [Reset " << player->getStorageValue(555845, value) >> "] {Idade 0}.";
 
 		if (group->access) {
-			s << " Você é " << group->name << '.';
+			s << " Você é um " << group->name << '.';
 		} else if (vocation->getId() != VOCATION_NONE) {
 			s << " Você é um " << vocation->getVocDescription() << '.';
 		} else {
@@ -121,7 +121,7 @@ std::string Player::getDescription(int32_t lookDistance) const
 	} else {
 		s << name;
 		if (!group->access) {
-			s << " (Level " << level << ')';
+			s << " (Level " << level << ")";
 		}
 		s << '.';
 
@@ -132,7 +132,7 @@ std::string Player::getDescription(int32_t lookDistance) const
 		}
 
 		if (group->access) {
-			s << " é " << group->name << '.';
+			s << " é um " << group->name << '.';
 		} else if (vocation->getId() != VOCATION_NONE) {
 			s << " é um " << vocation->getVocDescription() << '.';
 		} else {
@@ -142,11 +142,11 @@ std::string Player::getDescription(int32_t lookDistance) const
 
 	if (party) {
 		if (lookDistance == -1) {
-			s << " O seu grupo ";
+			s << " A sua party tem";
 		} else if (sex == PLAYERSEX_FEMALE) {
-			s << " Ela está em um grupo com ";
+			s << " Ela está em uma party com ";
 		} else {
-			s << " Ele está em um grupo com ";
+			s << " Ele está em uma party com ";
 		}
 
 		size_t memberCount = party->getMemberCount() + 1;
@@ -1552,8 +1552,8 @@ void Player::onThink(uint32_t interval)
 			kickPlayer(true);
 		} else if (client && idleTime == 60000 * kickAfterMinutes) {
 			std::ostringstream ss;
-			ss << "Você será desconectado em " << kickAfterMinutes << " minutos por inatividade.";
-			client->sendTextMessage(TextMessage(MESSAGE_STATUS_WARNING, ss.str()));
+			ss << "Você será desconectado em (" << kickAfterMinutes << ") minutos por inatividade.";
+			client->sendTextMessage(TextMessage(MESSAGE_EVENT_ADVANCE, ss.str()));
 		}
 	}
 
@@ -1759,7 +1759,7 @@ void Player::addExperience(Creature* source, uint64_t exp, bool sendText/* = fal
 		g_creatureEvents->playerAdvance(this, SKILL_LEVEL, prevLevel, level);
 
 		std::ostringstream ss;
-		ss << "Você avançou do nível " << prevLevel << " para o " << level << '.';
+		ss << "Você avançou do nível " << prevLevel << " para o nível " << level << '.';
 		sendTextMessage(MESSAGE_EVENT_ADVANCE, ss.str());
 	}
 
@@ -1834,7 +1834,7 @@ void Player::removeExperience(uint64_t exp, bool sendText/* = false*/)
 		}
 
 		std::ostringstream ss;
-		ss << "Você voltou do nivel " << oldLevel << " para o nível " << level << '.';
+		ss << "Você voltou do nível " << oldLevel << " para o nível " << level << '.';
 		sendTextMessage(MESSAGE_EVENT_ADVANCE, ss.str());
 	}
 
@@ -2212,7 +2212,7 @@ Item* Player::getCorpse(Creature* lastHitCreature, Creature* mostDamageCreature)
 	if (corpse && corpse->getContainer()) {
 		std::ostringstream ss;
 		if (lastHitCreature) {
-			ss << "Você reconhece " << getNameDescription() << ". " << (getSex() == PLAYERSEX_FEMALE ? "ela" : "ele") << " foi morto por " << lastHitCreature->getNameDescription() << '.';
+			ss << "Você reconhece " << getNameDescription() << ". (Level << level <<) [Reset 0]. " << (getSex() == PLAYERSEX_FEMALE ? "Ela" : "Ele") << " foi morto por " << lastHitCreature->getNameDescription() << '.';
 		} else {
 			ss << "Você reconhece " << getNameDescription() << '.';
 		}
@@ -2279,9 +2279,9 @@ void Player::notifyStatusChange(Player* loginPlayer, VipStatus_t status)
 	client->sendUpdatedVIPStatus(loginPlayer->guid, status);
 
 	if (status == VIPSTATUS_ONLINE) {
-		client->sendTextMessage(TextMessage(MESSAGE_STATUS_SMALL, loginPlayer->getName() + " conectou."));
+		client->sendTextMessage(TextMessage(MESSAGE_STATUS_SMALL, loginPlayer->getName() + " da sua VIP conectou."));
 	} else if (status == VIPSTATUS_OFFLINE) {
-		client->sendTextMessage(TextMessage(MESSAGE_STATUS_SMALL, loginPlayer->getName() + " desconectou."));
+		client->sendTextMessage(TextMessage(MESSAGE_STATUS_SMALL, loginPlayer->getName() + " da sua VIP desconectou."));
 	}
 }
 
@@ -4647,7 +4647,7 @@ bool Player::addOfflineTrainingTries(skills_t skill, uint64_t tries)
 	}
 
 	std::ostringstream ss;
-	ss << std::fixed << std::setprecision(2) << "Seu " << ucwords(getSkillName(skill)) << " mudou de nível " << oldSkillValue << " (com " << oldPercentToNextLevel << "% de progresso para o nível " << (oldSkillValue + 1) << ") ao nível " << newSkillValue << " (com " << newPercentToNextLevel << "% de progresso para o nível " << (newSkillValue + 1) << ')';
+	ss << std::fixed << std::setprecision(2) << "Seu " << ucwords(getSkillName(skill)) << " avançou para nível " << oldSkillValue << " (com " << oldPercentToNextLevel << "% de progresso para próximo nível " << (oldSkillValue + 1) << ") ao nível " << newSkillValue << " (com " << newPercentToNextLevel << "% de progresso para o próximo nível " << (newSkillValue + 1) << ')';
 	sendTextMessage(MESSAGE_EVENT_ADVANCE, ss.str());
 	return sendUpdate;
 }

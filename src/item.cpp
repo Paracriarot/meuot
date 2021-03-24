@@ -914,7 +914,7 @@ std::string Item::getDescription(const ItemType& it, int32_t lookDistance,
 				if (item) {
 					tmpSubType = item->getSubType();
 				}
-				s << ". " << (it.stackable && tmpSubType > 1 ? "Eles" : "Ele") << " só pode ser usado por ";
+				s << ". " << (it.stackable && tmpSubType > 1 ? "Elas" : "Ela") << " só pode ser usado por ";
 
 				const VocSpellMap& vocMap = rune->getVocMap();
 				std::vector<Vocation*> showVocMap;
@@ -933,7 +933,7 @@ std::string Item::getDescription(const ItemType& it, int32_t lookDistance,
 					while (vocIt != vocLast) {
 						s << asLowerCaseString((*vocIt)->getVocName()) << "s";
 						if (++vocIt == vocLast) {
-							s << " e ";
+							s << " e";
 						} else {
 							s << ", ";
 						}
@@ -964,7 +964,7 @@ std::string Item::getDescription(const ItemType& it, int32_t lookDistance,
 		if (it.weaponType == WEAPON_DISTANCE && it.ammoType != AMMO_NONE) {
 			bool begin = true;
 			begin = false;
-			s << " (Range: " << static_cast<uint16_t>(item ? item->getShootRange() : it.shootRange);
+			s << " (Alcance: " << static_cast<uint16_t>(item ? item->getShootRange() : it.shootRange);
 
 			int32_t attack;
 			int8_t hitChance;
@@ -977,7 +977,7 @@ std::string Item::getDescription(const ItemType& it, int32_t lookDistance,
 			}
 
 			if (attack != 0) {
-				s << ", Atk " << std::showpos << attack << std::noshowpos;
+				s << ", Ataque: " << std::showpos << attack << std::noshowpos;
 			}
 
 			if (hitChance != 0) {
@@ -1149,7 +1149,7 @@ std::string Item::getDescription(const ItemType& it, int32_t lookDistance,
 
 			if (attack != 0) {
 				begin = false;
-				s << " (Atk:" << attack;
+				s << " (Ataque:" << attack;
 
 				if (it.abilities && it.abilities->elementType != COMBAT_NONE && it.abilities->elementDamage != 0) {
 					s << " physical + " << it.abilities->elementDamage << ' ' << getCombatName(it.abilities->elementType);
@@ -1164,7 +1164,7 @@ std::string Item::getDescription(const ItemType& it, int32_t lookDistance,
 					s << ", ";
 				}
 
-				s << "Def:" << defense;
+				s << "Defesa:" << defense;
 				if (extraDefense != 0) {
 					s << ' ' << std::showpos << extraDefense << std::noshowpos;
 				}
@@ -1544,31 +1544,31 @@ std::string Item::getDescription(const ItemType& it, int32_t lookDistance,
 								if (date != 0) {
 									s << " em " << formatDateShort(date);
 								}
-								s << ": ";
+								s << ":\n ";
 							} else {
-								s << "Você lê: ";
+								s << "Você lê:\n ";
 							}
 							s << *text;
 						} else {
-							s << "Nada está escrito nele.";
+							s << "Nada está escrito nele";
 						}
 					} else {
-						s << "Nada está escrito nele.";
+						s << "Nada está escrito nele";
 					}
 				} else {
-					s << "Você está muito longe para lê-lo.";
+					s << "Você está muito longe para lê-lo";
 				}
 			} else if (it.levelDoor != 0 && item) {
 				uint16_t actionId = item->getActionId();
 				if (actionId >= it.levelDoor) {
-					s << " para o nível " << (actionId - it.levelDoor);
+					s << " para o nível acima de " << (actionId - it.levelDoor);
 				}
 			}
 		}
 	}
 
 	if (it.showCharges) {
-		s << " que tem " << subType << " carga" << (subType != 1 ? "s" : "") << " e faltam";
+		s << " que tem " << subType << " carga" << (subType != 1 ? "s" : "") << ".";
 	}
 
 	if (it.showDuration) {
@@ -1621,7 +1621,7 @@ std::string Item::getDescription(const ItemType& it, int32_t lookDistance,
 	}
 
 	if (it.wieldInfo != 0) {
-		s << std::endl << "Ele só pode ser usado por ";
+		s << std::endl << "Ela só pode ser usado por ";
 
 		if (it.wieldInfo & WIELDINFO_PREMIUM) {
 			s << "premium ";
@@ -1732,9 +1732,9 @@ std::string Item::getWeightDescription(const ItemType& it, uint32_t weight, uint
 {
 	std::ostringstream ss;
 	if (it.stackable && count > 1 && it.showCount != 0) {
-		ss << "Eles pesam ";
+		ss << "Elas pesam: ";
 	} else {
-		ss << "Pesa ";
+		ss << "Pesa: ";
 	}
 
 	if (weight < 10) {

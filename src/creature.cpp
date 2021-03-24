@@ -1129,7 +1129,7 @@ void Creature::onGainExperience(uint64_t gainExp, Creature* target)
 			return;
 		}
 
-		TextMessage message(MESSAGE_EXPERIENCE_OTHERS, ucfirst(getNameDescription()) + " gained " + std::to_string(gainExp) + (gainExp != 1 ? " experience points." : " experience point."));
+		TextMessage message(MESSAGE_EXPERIENCE_OTHERS, ucfirst(getNameDescription()) + " ganhou " + std::to_string(gainExp) + (gainExp != 1 ? " pontos de experiência." : " ponto de experiência."));
 		message.position = position;
 		message.primary.color = TEXTCOLOR_WHITE_EXP;
 		message.primary.value = gainExp;

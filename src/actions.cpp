@@ -503,11 +503,11 @@ void Actions::showUseHotkeyMessage(Player* player, const Item* item, uint32_t co
 
 	const ItemType& it = Item::items[item->getID()];
 	if (!it.showCount) {
-		ss << "Usando um(a) " << item->getName() << "...";
+		ss << "Usando um " << item->getName() << "...";
 	} else if (count == 1) {
-		ss << "Usando o último(a) " << item->getName() << "...";
+		ss << "Usando o último " << item->getName() << "...";
 	} else {
-		ss << "Usando um(a) " << item->getPluralName() << " dos " << count << "...";
+		ss << "Usando um dos " << count << " " << item->getPluralName() << "...";
 	}
 	player->sendTextMessage(MESSAGE_INFO_DESCR, ss.str());
 }
