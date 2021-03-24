@@ -123,7 +123,7 @@ std::string Player::getDescription(int32_t lookDistance) const
 	} else {
 		s << name;
 		if (!group->access) {
-			s << " (Level " << level << ")";
+			s << " (Level " << level << ") [Reset " << getStorageValue(5123513,value) << "] {Idade 0}";
 		}
 		s << '.';
 
