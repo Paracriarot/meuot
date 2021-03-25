@@ -110,19 +110,19 @@ std::string Player::getDescription(int32_t lookDistance) const
 	std::ostringstream s;
 
 	if (lookDistance == -1) {
-		s << "você mesmo. (Level " << level << ") [Reset " << getReborn();
+		s << "você mesmo. (Level " << level << ") [Reset " << getReborn() << "].";
 
 		if (group->access) {
 			s << " Você é um " << group->name << '.';
 		} else if (vocation->getId() != VOCATION_NONE) {
-			s << " Você é " << vocation->getVocDescription() << '.';
+			s << " Você é um " << vocation->getVocDescription() << '.';
 		} else {
 			s << " Você não tem nenhuma vocação.";
 		}
 	} else {
 		s << name;
 		if (!group->access) {
-			s << " (Level " << level << ") [Reset " << getReborn() << "]";
+			s << " (Level " << level << ") [Reset " << getReborn() << "].";
 		}
 		s << '.';
 
@@ -2213,7 +2213,7 @@ Item* Player::getCorpse(Creature* lastHitCreature, Creature* mostDamageCreature)
 	if (corpse && corpse->getContainer()) {
 		std::ostringstream ss;
 		if (lastHitCreature) {
-			ss << "Você reconhece " << getNameDescription() << ". (Level << level <<) [Reset 0]. " << (getSex() == PLAYERSEX_FEMALE ? "Ela" : "Ele") << " foi morto por " << lastHitCreature->getNameDescription() << '.';
+			ss << "Você reconhece " << getNameDescription() << ". (Level " << level << ") [Reset " << getReborn() << "]. " << (getSex() == PLAYERSEX_FEMALE ? "Ela" : "Ele") << " foi morto por " << lastHitCreature->getNameDescription() << '.';
 		} else {
 			ss << "Você reconhece " << getNameDescription() << '.';
 		}
