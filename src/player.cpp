@@ -4372,7 +4372,7 @@ uint8_t Player::getCurrentMount() const
 uint32_t Player::getReborn() const
 {
 	int32_t value;
-	getStorageValue(5123513, value) {
+	if (getStorageValue(5123513, value)) {
 		return value;
 	}
 	return 0;
