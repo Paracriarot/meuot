@@ -4369,6 +4369,15 @@ uint8_t Player::getCurrentMount() const
 	return 0;
 }
 
+uint32_t Player::getReborn() const
+{
+	int32_t value;
+	getStorageValue(5123513, value) {
+		return value;
+	}
+	return 0;
+}
+
 void Player::setCurrentMount(uint8_t mount)
 {
 	addStorageValue(PSTRG_MOUNTS_CURRENTMOUNT, mount);
