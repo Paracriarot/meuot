@@ -104,22 +104,15 @@ bool Player::isPushable() const
 	return Creature::isPushable();
 }
 
-uint8_t Player::getReset() const
-{
-	int32_t value;
-	if (getStorageValue(5123513, value)) {
-		return value;
-	}
-	return 0;
-}
-
 std::string Player::getDescription(int32_t lookDistance) const
 {
 	std::ostringstream s;
 
 	if (lookDistance == -1) {
 
-		s << "você mesmo. (Level " << level << ") [Reset " << getStorageValue(getReset, value) << "] {Idade 0}.";
+std::string value;
+int32_t value;
+		s << "você mesmo. (Level " << level << ") [Reset " << getStorage(412421, value) << "] {Idade 0}.";
 
 		if (group->access) {
 			s << " Você é um " << group->name << '.';
