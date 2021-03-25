@@ -476,8 +476,6 @@ class Player final : public Creature, public Cylinder
 			return accountNumber;
 		}
 
-                uint32_t getReborn() const;
-
 		AccountType_t getAccountType() const {
 			return accountType;
 		}
@@ -572,6 +570,19 @@ class Player final : public Creature, public Cylinder
 				return std::max<int32_t>(0, capacity - inventoryWeight);
 			}
 		}
+
+uint32_t Player::getReborn() const
+{
+    uint32_t ret = 0;
+    std::string value;
+    getStorage(5123513, value);
+    int32_t intValue = atoi(value.c_str());
+    if(!intValue || value == "0" || intValue <= 0 || value == "-1")
+        return ret;
+    
+    ret = intValue;
+    return intValue;
+}
 
 		int32_t getMaxHealth() const override {
 			return std::max<int32_t>(1, healthMax + varStats[STAT_MAXHITPOINTS]);

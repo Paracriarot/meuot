@@ -106,6 +106,7 @@ bool Player::isPushable() const
 
 std::string Player::getDescription(int32_t lookDistance) const
 {
+        uint32_t getReborn() const;
 	std::ostringstream s;
 
 	if (lookDistance == -1) {
@@ -752,15 +753,6 @@ bool Player::canWalkthrough(const Creature* creature) const
 		return false;
 	}
 
-}
-
-uint32_t Player::getReborn() const
-{
-	int32_t value;
-	if (getStorageValue(5123513, value)) {
-		return value;
-	}
-	return 0;
 }
 
 bool Player::canWalkthroughEx(const Creature* creature) const
