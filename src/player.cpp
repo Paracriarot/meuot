@@ -108,20 +108,20 @@ std::string Player::getDescription(int32_t lookDistance) const
 {
 	std::ostringstream s;
 
-			s << "você mesmo. (Level " << level << ") [Reset " << getReborn() << "] {Idade 0}.";
+	if (lookDistance == -1) {
+		s << "você mesmo. (Level " << level << ") [Reset " << getReborn() << "]";
 
 		if (group->access) {
 			s << " Você é um " << group->name << '.';
 		} else if (vocation->getId() != VOCATION_NONE) {
-			s << " Você é um " << vocation->getVocDescription() << '.';
+			s << " Você é " << vocation->getVocDescription() << '.';
 		} else {
 			s << " Você não tem nenhuma vocação.";
 		}
 	} else {
 		s << name;
 		if (!group->access) {
-
-			s << " (Level " << level << ") [Reset " << getReborn() << "] {Idade 0}";
+			s << " (Level " << level << ')';
 		}
 		s << '.';
 
