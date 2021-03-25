@@ -475,6 +475,9 @@ class Player final : public Creature, public Cylinder
 		uint32_t getAccount() const {
 			return accountNumber;
 		}
+
+                uint32_t getReborn() const;
+
 		AccountType_t getAccountType() const {
 			return accountType;
 		}

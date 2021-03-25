@@ -108,7 +108,7 @@ std::string Player::getDescription(int32_t lookDistance) const
 {
 	std::ostringstream s;
 
-			s << "você mesmo. (Level " << level << ") [Reset " .. player->getStorageValue(412421, value) .. "] {Idade 0}.";
+			s << "você mesmo. (Level " << level << ") [Reset " << getReborn() << "] {Idade 0}.";
 
 		if (group->access) {
 			s << " Você é um " << group->name << '.';
@@ -121,7 +121,7 @@ std::string Player::getDescription(int32_t lookDistance) const
 		s << name;
 		if (!group->access) {
 
-			s << " (Level " << level << ") [Reset 0] {Idade 0}";
+			s << " (Level " << level << ") [Reset " << getReborn() << "] {Idade 0}";
 		}
 		s << '.';
 
@@ -752,6 +752,19 @@ bool Player::canWalkthrough(const Creature* creature) const
 		return false;
 	}
 
+}
+
+uint32_t Player::getReborn() const
+{
+    uint32_t ret = 0;
+    std::string value;
+    getStorage(5123513, value);
+    int32_t intValue = atoi(value.c_str());
+    if(!intValue || value == "0" || intValue <= 0 || value == "-1")
+        return ret;
+    
+    ret = intValue;
+    return intValue;
 }
 
 bool Player::canWalkthroughEx(const Creature* creature) const
