@@ -104,14 +104,22 @@ bool Player::isPushable() const
 	return Creature::isPushable();
 }
 
+uint8_t Player::getReset() const
+{
+	int32_t value;
+	if (getStorageValue(5123513, value)) {
+		return value;
+	}
+	return 0;
+}
+
 std::string Player::getDescription(int32_t lookDistance) const
 {
 	std::ostringstream s;
 
 	if (lookDistance == -1) {
 
-                std::string value;
-		s << "você mesmo. (Level " << level << ") [Reset " << getStorage(555845, value) << "] {Idade 0}.";
+		s << "você mesmo. (Level " << level << ") [Reset " << getStorageValue(getReset, value) << "] {Idade 0}.";
 
 		if (group->access) {
 			s << " Você é um " << group->name << '.';
@@ -124,7 +132,7 @@ std::string Player::getDescription(int32_t lookDistance) const
 		s << name;
 		if (!group->access) {
 
-			s << " (Level " << level << ") [Reset " << getStorage(5123513) << "] {Idade 0}";
+			s << " (Level " << level << ") [Reset 0] {Idade 0}";
 		}
 		s << '.';
 
@@ -4650,7 +4658,7 @@ bool Player::addOfflineTrainingTries(skills_t skill, uint64_t tries)
 	}
 
 	std::ostringstream ss;
-	ss << std::fixed << std::setprecision(2) << "Seu " << ucwords(getSkillName(skill)) << " avançou para nível " << oldSkillValue << " (com " << oldPercentToNextLevel << "% de progresso para próximo nível " << (oldSkillValue + 1) << ") ao nível " << newSkillValue << " (com " << newPercentToNextLevel << "% de progresso para o próximo nível " << (newSkillValue + 1) << ')';
+	ss << std::fixed << std::setprecision(2) << "Seu skill " << ucwords(getSkillName(skill)) << " que era " << oldSkillValue << " (com " << oldPercentToNextLevel << "% de progresso para próximo nível " << (oldSkillValue + 1) << ") avançou para " << newSkillValue << " (com " << newPercentToNextLevel << "% de progresso para o próximo nível " << (newSkillValue + 1) << ')';
 	sendTextMessage(MESSAGE_EVENT_ADVANCE, ss.str());
 	return sendUpdate;
 }
