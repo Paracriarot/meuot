@@ -108,7 +108,7 @@ std::string Player::getDescription(int32_t lookDistance) const
 {
 	std::ostringstream s;
 
-	if (lookDistance == -1) {
+			s << "você mesmo. (Level " << level << ") [Reset " .. player->getStorageValue(412421, value) .. "] {Idade 0}.";
 
 		if (group->access) {
 			s << " Você é um " << group->name << '.';
@@ -143,7 +143,7 @@ std::string Player::getDescription(int32_t lookDistance) const
 	if (party) {
 		if (lookDistance == -1) {
 			s << " A sua party tem";
-		} else if (sex == PLAYERSEX_FEMALE) {
+"		} else if (sex == PLAYERSEX_FEMALE) {
 			s << " Ela está em uma party com ";
 		} else {
 			s << " Ele está em uma party com ";
