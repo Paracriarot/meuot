@@ -758,7 +758,7 @@ uint32_t Player::getReborn() const
 {
     uint32_t ret = 0;
     std::string value;
-    getStorage(5123513, value);
+    getStorageValue(5123513, value);
     int32_t intValue = atoi(value.c_str());
     if(!intValue || value == "0" || intValue <= 0 || value == "-1")
         return ret;
