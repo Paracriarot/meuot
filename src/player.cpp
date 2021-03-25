@@ -122,7 +122,7 @@ std::string Player::getDescription(int32_t lookDistance) const
 	} else {
 		s << name;
 		if (!group->access) {
-			s << " (Level " << level << ") [Reset " << getReborn() << "].";
+			s << " (Level " << level << ") [Reset " << getReborn() << "]";
 		}
 		s << '.';
 
