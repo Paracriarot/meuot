@@ -756,15 +756,11 @@ bool Player::canWalkthrough(const Creature* creature) const
 
 uint32_t Player::getReborn() const
 {
-    uint32_t ret = 0;
-    std::string value;
-    getStorageValue(5123513, value);
-    int32_t intValue = atoi(value.c_str());
-    if(!intValue || value == "0" || intValue <= 0 || value == "-1")
-        return ret;
-    
-    ret = intValue;
-    return intValue;
+	int32_t value;
+	if (getStorageValue(5123513, value)) {
+		return value;
+	}
+	return 0;
 }
 
 bool Player::canWalkthroughEx(const Creature* creature) const
