@@ -3496,14 +3496,10 @@ void ProtocolGame::AddPlayerStats(NetworkMessage& msg)
     msg.add<uint16_t>(std::min<int32_t>(player->getHealth(), std::numeric_limits<uint16_t>::max()));
     msg.add<uint16_t>(std::min<int32_t>(player->getMaxHealth(), std::numeric_limits<uint16_t>::max()));
 }
+
     if (player->getMaxHealth() > 65535) {
         msg.add<uint16_t>(std::min<int32_t>(player->getHealth() * 100 / player->getMaxHealth(), std::numeric_limits<uint16_t>::max()));
         msg.add<uint16_t>(100);
-    }
-    else
-    {
-        msg.add<uint16_t>(0);
-        msg.add<uint16_t>(0);
     }
 
 	msg.add<uint32_t>(player->getFreeCapacity());
@@ -3532,11 +3528,6 @@ void ProtocolGame::AddPlayerStats(NetworkMessage& msg)
     if (player->getMaxMana() > 65535) {
         msg.add<uint16_t>(std::min<int32_t>(player->getMana() * 100 / player->getMaxMana(), std::numeric_limits<uint16_t>::max()));
         msg.add<uint16_t>(100);
-    }
-    else
-    {
-        msg.add<uint16_t>(0);
-        msg.add<uint16_t>(0);
     }
 
 	if (version < 1200) {
