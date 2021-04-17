@@ -79,6 +79,11 @@ enum tradestate_t : uint8_t {
 	TRADE_TRANSFER,
 };
 
+enum attackHand_t : uint8_t {
+	HAND_LEFT,
+	HAND_RIGHT,
+};
+
 struct VIPEntry {
 	VIPEntry(uint32_t initGuid, std::string initName, std::string initDescription, uint32_t initIcon, bool initNotify) :
 		guid(initGuid), name(std::move(initName)), description(std::move(initDescription)), icon(initIcon), notify(initNotify) {}
@@ -728,11 +733,25 @@ class Player final : public Creature, public Cylinder
 			return lastAttackBlockType;
 		}
 
+		void switchAttackHand() {
+			lastAttackHand = lastAttackHand == HAND_LEFT ? HAND_RIGHT : HAND_LEFT;
+		}
+		slots_t getAttackHand() const {
+			return lastAttackHand == HAND_LEFT ? CONST_SLOT_LEFT : CONST_SLOT_RIGHT;
+		}
+		void switchBlockSkillAdvance() {
+			blockSkillAdvance = !blockSkillAdvance;
+		}
+		bool getBlockSkillAdvance() {
+			return blockSkillAdvance;
+		}
+
 		Item* getWeapon(slots_t slot, bool ignoreAmmo) const;
 		Item* getWeapon(bool ignoreAmmo = false) const;
 		WeaponType_t getWeaponType() const;
 		int32_t getWeaponSkill(const Item* item) const;
 		void getShieldAndWeapon(const Item*& shield, const Item*& weapon) const;
+                bool isDualWielding() const;
 
 		void drainHealth(Creature* attacker, int32_t damage) override;
 		void drainMana(Creature* attacker, int32_t manaLoss) override;
@@ -1530,6 +1549,7 @@ class Player final : public Creature, public Cylinder
 		uint32_t conditionSuppressions = 0;
 		uint32_t level = 1;
 		uint32_t magLevel = 0;
+                uint32_t reborn = 0;
 		uint32_t actionTaskEvent = 0;
 		uint32_t nextStepEvent = 0;
 		uint32_t walkTaskEvent = 0;
@@ -1592,7 +1612,8 @@ class Player final : public Creature, public Cylinder
 		tradestate_t tradeState = TRADE_NONE;
 		fightMode_t fightMode = FIGHTMODE_ATTACK;
 		AccountType_t accountType = ACCOUNT_TYPE_NORMAL;
-
+		attackHand_t lastAttackHand;
+		bool blockSkillAdvance;
 		bool chaseMode = false;
 		bool secureMode = false;
 		bool inMarket = false;
@@ -1619,9 +1640,7 @@ class Player final : public Creature, public Cylinder
 
 		bool isPromoted() const;
 
-		uint32_t getAttackSpeed() const {
-			return vocation->getAttackSpeed();
-		}
+                uint32_t getAttackSpeed() const;
 
 		static uint8_t getPercentLevel(uint64_t count, uint64_t nextLevelCount);
 		double getLostPercent() const;

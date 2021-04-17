@@ -2324,9 +2324,9 @@ void ProtocolGame::sendMarketDetail(uint16_t itemId)
 
 	if (it.slotPosition & SLOTP_TWO_HAND) {
 		if (!weaponName.empty()) {
-			weaponName += ", two-handed";
+			weaponName += ", duas mãos";
 		} else {
-			weaponName = "two-handed";
+			weaponName = "duas mãos";
 		}
 	}
 
@@ -3647,7 +3647,7 @@ void ProtocolGame::sendImbuementWindow(Item* item)
 
 	std::vector<Imbuement*> imbuements = g_imbuements->getImbuements(player, item);
 	if (!itemHasImbue && imbuements.empty()) {
-		player->sendTextMessage(MESSAGE_EVENT_ADVANCE, "Você não tem permissão para imbuír. Visite o Jordan no sul [V] de Wisland para obter ajuda.");
+		player->sendTextMessage(MESSAGE_EVENT_ADVANCE, "Você não tem permissão para imbuír. Visite o Pirata Hullfs na ilha ao sul [V] de Wisland para obter a permissão.");
 		return;
 	}
 	// Seting imbuing item

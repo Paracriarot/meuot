@@ -166,6 +166,7 @@ bool ConfigManager::load()
 	boolean[FORCE_MONSTERTYPE_LOAD] = getGlobalBoolean(L, "forceMonsterTypesOnLoad", true);
 	boolean[SERVER_SAVE_SHUTDOWN] = getGlobalBoolean(L, "serverSaveShutdown", true);
 	boolean[STOREMODULES] = getGlobalBoolean(L, "gamestoreByModules", true);
+        boolean[ALLOW_DUAL_WIELDING] = getGlobalBoolean(L, "allowDualWielding", false);
 
 	string[DEFAULT_PRIORITY] = getGlobalString(L, "defaultPriority", "high");
 	string[SERVER_NAME] = getGlobalString(L, "serverName", "");
@@ -211,7 +212,8 @@ bool ConfigManager::load()
 	integer[BLACK_SKULL_DURATION] = getGlobalNumber(L, "blackSkullDuration", 45);
 	integer[ORANGE_SKULL_DURATION] = getGlobalNumber(L, "orangeSkullDuration", 7);
 	integer[SERVER_SAVE_NOTIFY_DURATION] = getGlobalNumber(L, "serverSaveNotifyDuration", 5);
-
+        integer[DUAL_WIELDING_SPEED_RATE] = getGlobalNumber(L, "dualWieldingSpeedRate", 200);
+	integer[DUAL_WIELDING_DAMAGE_RATE] = getGlobalNumber(L, "dualWieldingDamageRate", 60);
 	floating[RATE_MONSTER_HEALTH] = getGlobalFloat(L, "rateMonsterHealth", 1.0);
 	floating[RATE_MONSTER_ATTACK] = getGlobalFloat(L, "rateMonsterAttack", 1.0);
 	floating[RATE_MONSTER_DEFENSE] = getGlobalFloat(L, "rateMonsterDefense", 1.0);

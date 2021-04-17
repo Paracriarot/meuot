@@ -1201,7 +1201,7 @@ const char* getReturnMessage(ReturnValue value)
 			return "Você só pode usá-lo em criaturas.";
 
 		case RETURNVALUE_TURNSECUREMODETOATTACKUNMARKEDPLAYERS:
-			return "Desative a mão de PvP se você realmente quiser atacar jogadores.";
+			return "Ative a mão de PvP se você quiser atacar jogadores.";
 
 		case RETURNVALUE_YOUNEEDPREMIUMACCOUNT:
 			return "Você precisa de uma conta premium.";
@@ -1222,7 +1222,7 @@ const char* getReturnMessage(ReturnValue value)
 			return "Você não pode entrar em uma zona PvP depois de atacar outro jogador.";
 
 		case RETURNVALUE_ACTIONNOTPERMITTEDINANOPVPZONE:
-			return "Esta ação não é permitida em uma zona não PvP.";
+			return "Esta ação não é permitida em uma zona protegida de PvP.";
 
 		case RETURNVALUE_YOUCANNOTLOGOUTHERE:
 			return "Você não pode desconectar aqui.";
