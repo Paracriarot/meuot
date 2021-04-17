@@ -51,6 +51,7 @@ uint32_t Player::playerAutoID = 0x10010000;
 Player::Player(ProtocolGame_ptr p) :
 	Creature(), lastPing(OTSYS_TIME()), lastPong(lastPing), inbox(new Inbox(ITEM_INBOX)), client(std::move(p))
 {
+        lastAttackHand = HAND_LEFT;
 	inbox->incrementReferenceCounter();
 }
 
@@ -751,7 +752,7 @@ bool Player::canWalkthrough(const Creature* creature) const
 
 	if (player) {
 		const Tile* playerTile = player->getTile();
-		if (!playerTile || (!playerTile->hasFlag(TILESTATE_NOPVPZONE) && !playerTile->hasFlag(TILESTATE_PROTECTIONZONE) || player->getLevel() <= static_cast<uint32_t>(g_config.getNumber(ConfigManager::PROTECTION_LEVEL)) || getReborn() > 2)) {
+		if (!playerTile || (!playerTile->hasFlag(TILESTATE_NOPVPZONE) && !playerTile->hasFlag(TILESTATE_PROTECTIONZONE) || player->getLevel() <= static_cast<uint32_t>(g_config.getNumber(ConfigManager::PROTECTION_LEVEL)) || player->getReborn() <= 2)) {
 			return false;
 		}
 
@@ -796,7 +797,7 @@ bool Player::canWalkthroughEx(const Creature* creature) const
 	const Player* player = creature->getPlayer();
 	if (player) {
 		const Tile* playerTile = player->getTile();
-		return playerTile && (playerTile->hasFlag(TILESTATE_NOPVPZONE) || playerTile->hasFlag(TILESTATE_PROTECTIONZONE) || player->getLevel() <= static_cast<uint32_t>(g_config.getNumber(ConfigManager::PROTECTION_LEVEL)) || getReborn() <= 2);
+		return playerTile && (playerTile->hasFlag(TILESTATE_NOPVPZONE) || playerTile->hasFlag(TILESTATE_PROTECTIONZONE) || player->getLevel() <= static_cast<uint32_t>(g_config.getNumber(ConfigManager::PROTECTION_LEVEL)) || player->getReborn() <= 2);
 	} else {
 		return false;
 	}
@@ -2250,7 +2251,7 @@ Item* Player::getCorpse(Creature* lastHitCreature, Creature* mostDamageCreature)
 	if (corpse && corpse->getContainer()) {
 		std::ostringstream ss;
 		if (lastHitCreature) {
-			ss << "Você reconhece " << getNameDescription() << ". (Level " << level << ") [Reset " << getReborn() << "]. " << (getSex() == PLAYERSEX_FEMALE ? "Ela" : "Ele") << " foi morto por " << lastHitCreature->getNameDescription() << '.';
+			ss << "Você reconhece " << getNameDescription() << ". " << (getSex() == PLAYERSEX_FEMALE ? "Ela" : "Ele") << " foi morto por no nível " << level << " e reset  " << getReborn() << " por " << lastHitCreature->getNameDescription() << ", maior dano " << mostDamageCreature->getNameDescription() << '.';
 		} else {
 			ss << "Você reconhece " << getNameDescription() << '.';
 		}
