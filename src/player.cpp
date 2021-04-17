@@ -500,7 +500,7 @@ void Player::addSkillAdvance(skills_t skill, uint64_t count)
 		skills[skill].percent = 0;
 
 		std::ostringstream ss;
-		ss << "Você avançou " << getSkillName(skill) << " para o nível " << skills[skill].level << '.';
+		ss << "Você avançou " << getSkillName(skill) << " para o nível [" << skills[skill].level << '].';
 		sendTextMessage(MESSAGE_EVENT_ADVANCE, ss.str());
 
 		g_creatureEvents->playerAdvance(this, skill, (skills[skill].level - 1), skills[skill].level);
@@ -752,7 +752,7 @@ bool Player::canWalkthrough(const Creature* creature) const
 
 	if (player) {
 		const Tile* playerTile = player->getTile();
-		if (!playerTile || (!playerTile->hasFlag(TILESTATE_NOPVPZONE) && !playerTile->hasFlag(TILESTATE_PROTECTIONZONE) || player->getLevel() <= static_cast<uint32_t>(g_config.getNumber(ConfigManager::PROTECTION_LEVEL)) || player->getReborn() <= 2)) {
+		if (!playerTile || (!playerTile->hasFlag(TILESTATE_NOPVPZONE) && !playerTile->hasFlag(TILESTATE_PROTECTIONZONE) || player->getLevel() <= static_cast<uint32_t>(g_config.getNumber(ConfigManager::PROTECTION_LEVEL)))) {
 			return false;
 		}
 
@@ -797,7 +797,7 @@ bool Player::canWalkthroughEx(const Creature* creature) const
 	const Player* player = creature->getPlayer();
 	if (player) {
 		const Tile* playerTile = player->getTile();
-		return playerTile && (playerTile->hasFlag(TILESTATE_NOPVPZONE) || playerTile->hasFlag(TILESTATE_PROTECTIONZONE) || player->getLevel() <= static_cast<uint32_t>(g_config.getNumber(ConfigManager::PROTECTION_LEVEL)) || player->getReborn() <= 2);
+		return playerTile && (playerTile->hasFlag(TILESTATE_NOPVPZONE) || playerTile->hasFlag(TILESTATE_PROTECTIONZONE) || player->getLevel() <= static_cast<uint32_t>(g_config.getNumber(ConfigManager::PROTECTION_LEVEL)));
 	} else {
 		return false;
 	}
@@ -1681,7 +1681,7 @@ void Player::addManaSpent(uint64_t amount)
 		manaSpent = 0;
 
 		std::ostringstream ss;
-		ss << "Você avançou a sua magic level para " << magLevel << '.';
+		ss << "Você avançou a sua magic level para [" << magLevel << '].';
 		sendTextMessage(MESSAGE_EVENT_ADVANCE, ss.str());
 
 		g_creatureEvents->playerAdvance(this, SKILL_MAGLEVEL, magLevel - 1, magLevel);
@@ -2251,7 +2251,7 @@ Item* Player::getCorpse(Creature* lastHitCreature, Creature* mostDamageCreature)
 	if (corpse && corpse->getContainer()) {
 		std::ostringstream ss;
 		if (lastHitCreature) {
-			ss << "Você reconhece " << getNameDescription() << ". " << (getSex() == PLAYERSEX_FEMALE ? "Ela" : "Ele") << " foi morto por no nível " << level << " e reset  " << getReborn() << " por " << lastHitCreature->getNameDescription() << ", maior dano " << mostDamageCreature->getNameDescription() << '.';
+			ss << "Você reconhece " << getNameDescription() << ". " << (getSex() == PLAYERSEX_FEMALE ? "Ela" : "Ele") << " foi morto por no nível (" << level << ") e reset [" << getReborn() << "] por " << lastHitCreature->getNameDescription() << "e por " << mostDamageCreature->getNameDescription() << '.';
 		} else {
 			ss << "Você reconhece " << getNameDescription() << '.';
 		}
@@ -4621,7 +4621,7 @@ bool Player::addOfflineTrainingTries(skills_t skill, uint64_t tries)
 
 		if (magLevel != currMagLevel) {
 			std::ostringstream ss;
-			ss << "Você avançou a sua magic level para " << magLevel << '.';
+			ss << "Você avançou a sua magic level para [" << magLevel << '].';
 			sendTextMessage(MESSAGE_EVENT_ADVANCE, ss.str());
 		}
 
@@ -4676,7 +4676,7 @@ bool Player::addOfflineTrainingTries(skills_t skill, uint64_t tries)
 
 		if (currSkillLevel != skills[skill].level) {
 			std::ostringstream ss;
-			ss << "Você avançou " << getSkillName(skill) << " para o nível " << skills[skill].level << '.';
+			ss << "Você avançou " << getSkillName(skill) << " para o nível [" << skills[skill].level << '].';
 			sendTextMessage(MESSAGE_EVENT_ADVANCE, ss.str());
 		}
 
