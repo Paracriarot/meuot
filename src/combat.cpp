@@ -49,7 +49,7 @@ CombatDamage Combat::getCombatDamage(Creature* creature, Creature* target) const
 			if (params.valueCallback) {
 				params.valueCallback->getMinMaxValues(player, damage, params.useCharges);
 			} else if (formulaType == COMBAT_FORMULA_LEVELMAGIC) {
-				int32_t levelFormula = player->getLevel() * 2 + player->getMagicLevel() * 3;
+				int32_t levelFormula = player->getLevel() * 4 + player->getMagicLevel() * 2;
 				damage.primary.value = normal_random(
 					static_cast<int32_t>(levelFormula * mina + minb),
 					static_cast<int32_t>(levelFormula * maxa + maxb)
