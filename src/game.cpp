@@ -4169,7 +4169,7 @@ bool Game::combatChangeHealth(Creature* attacker, Creature* target, CombatDamage
 				} else if (tmpPlayer == targetPlayer) {
 					ss.str({});
 					if (!attacker) {
-						ss << "Você foi curado.";
+						ss << "Você foi curado";
 					} else if (targetPlayer == attackerPlayer) {
 						ss << "Você curou você mesmo";
 					} else {
@@ -4182,9 +4182,9 @@ bool Game::combatChangeHealth(Creature* attacker, Creature* target, CombatDamage
 					if (spectatorMessage.empty()) {
 						ss.str({});
 						if (!attacker) {
-							ss << ucfirst(target->getNameDescription()) << " foi curado ";
+							ss << ucfirst(target->getNameDescription()) << " foi curado";
 						} else {
-							ss << ucfirst(attacker->getNameDescription()) << " curou ";
+							ss << ucfirst(attacker->getNameDescription()) << " curou";
 							if (attacker == target) {
 								ss << (targetPlayer ? (targetPlayer->getSex() == PLAYERSEX_FEMALE ? "si mesmo" : "si mesmo") : "si mesmo");
 							} else {
@@ -4279,12 +4279,12 @@ bool Game::combatChangeHealth(Creature* attacker, Creature* target, CombatDamage
 
 					if (tmpPlayer == attackerPlayer && attackerPlayer != targetPlayer) {
 						ss.str({});
-						ss << ucfirst(target->getNameDescription()) << " perdeu " << damageString + " mana devido ao seu ataque.";
+						ss << ucfirst(target->getNameDescription()) << " perdeu " << damageString + " pontos de mana devido ao seu ataque.";
 						message.type = MESSAGE_DAMAGE_DEALT;
 						message.text = ss.str();
 					} else if (tmpPlayer == targetPlayer) {
 						ss.str({});
-						ss << "Você perdeu " << damageString << " mana";
+						ss << "Você perdeu " << damageString << " pontos de mana";
 						if (!attacker) {
 							ss << '.';
 						} else if (targetPlayer == attackerPlayer) {
@@ -4297,7 +4297,7 @@ bool Game::combatChangeHealth(Creature* attacker, Creature* target, CombatDamage
 					} else {
 						if (spectatorMessage.empty()) {
 							ss.str({});
-							ss << ucfirst(target->getNameDescription()) << " perdeu " << damageString + " mana";
+							ss << ucfirst(target->getNameDescription()) << " perdeu " << damageString + " pontos de mana";
 							if (attacker) {
 								ss << " devido a ";
 								if (attacker == target) {
