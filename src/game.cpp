@@ -4184,7 +4184,7 @@ bool Game::combatChangeHealth(Creature* attacker, Creature* target, CombatDamage
 						if (!attacker) {
 							ss << ucfirst(target->getNameDescription()) << " foi curado";
 						} else {
-							ss << ucfirst(attacker->getNameDescription()) << " curou";
+							ss << ucfirst(attacker->getNameDescription()) << " curou ";
 							if (attacker == target) {
 								ss << (targetPlayer ? (targetPlayer->getSex() == PLAYERSEX_FEMALE ? "si mesmo" : "si mesmo") : "si mesmo");
 							} else {

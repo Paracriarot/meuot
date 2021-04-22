@@ -144,7 +144,7 @@ std::string Player::getDescription(int32_t lookDistance) const
 
 	if (party) {
 		if (lookDistance == -1) {
-			s << " A sua party tem";
+			s << " A sua party tem ";
 		} else if (sex == PLAYERSEX_FEMALE) {
 			s << " Ela está em uma party com ";
 		} else {
@@ -500,7 +500,7 @@ void Player::addSkillAdvance(skills_t skill, uint64_t count)
 		skills[skill].percent = 0;
 
 		std::ostringstream ss;
-		ss << "Você avançou " << getSkillName(skill) << " para o nível [" << skills[skill].level << '].';
+		ss << "Você avançou " << getSkillName(skill) << " para o nível [" << skills[skill].level << "].";
 		sendTextMessage(MESSAGE_EVENT_ADVANCE, ss.str());
 
 		g_creatureEvents->playerAdvance(this, skill, (skills[skill].level - 1), skills[skill].level);
@@ -1681,7 +1681,7 @@ void Player::addManaSpent(uint64_t amount)
 		manaSpent = 0;
 
 		std::ostringstream ss;
-		ss << "Você avançou a sua magic level para [" << magLevel << '].';
+		ss << "Você avançou a sua magic level para [" << magLevel << "].";
 		sendTextMessage(MESSAGE_EVENT_ADVANCE, ss.str());
 
 		g_creatureEvents->playerAdvance(this, SKILL_MAGLEVEL, magLevel - 1, magLevel);
@@ -4072,7 +4072,7 @@ void Player::addUnjustifiedDead(const Player* attacked)
 		return;
 	}
 
-	sendTextMessage(MESSAGE_EVENT_ADVANCE, "Aviso! O assassinato de " + attacked->getName() + " não foi justificado.");
+	sendTextMessage(MESSAGE_EVENT_ADVANCE, "Aviso! A participação na morte de " + attacked->getName() + " não foi justificada.");
 
 	unjustifiedKills.emplace_back(attacked->getGUID(), time(nullptr), true);
 
@@ -4621,7 +4621,7 @@ bool Player::addOfflineTrainingTries(skills_t skill, uint64_t tries)
 
 		if (magLevel != currMagLevel) {
 			std::ostringstream ss;
-			ss << "Você avançou a sua magic level para [" << magLevel << '].';
+			ss << "Você avançou a sua magic level para [" << magLevel << "].";
 			sendTextMessage(MESSAGE_EVENT_ADVANCE, ss.str());
 		}
 
@@ -4676,7 +4676,7 @@ bool Player::addOfflineTrainingTries(skills_t skill, uint64_t tries)
 
 		if (currSkillLevel != skills[skill].level) {
 			std::ostringstream ss;
-			ss << "Você avançou " << getSkillName(skill) << " para o nível [" << skills[skill].level << '].';
+			ss << "Você avançou " << getSkillName(skill) << " para o nível [" << skills[skill].level << "].";
 			sendTextMessage(MESSAGE_EVENT_ADVANCE, ss.str());
 		}
 

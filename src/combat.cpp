@@ -497,8 +497,8 @@ void Combat::CombatHealthFunc(Creature* caster, Creature* target, const CombatPa
 
 	if ((damage.primary.value < 0 || damage.secondary.value < 0)) {
 		if (caster && caster->getPlayer() && target->getSkull() != SKULL_BLACK && target->getPlayer()) {
-			damage.primary.value /= 1;
-			damage.secondary.value /= 1;
+			damage.primary.value /= 1.5;
+			damage.secondary.value /= 1.5;
 		}
 	}
 
@@ -514,7 +514,7 @@ void Combat::CombatManaFunc(Creature* caster, Creature* target, const CombatPara
 	CombatDamage damage = *data;
 	if (damage.primary.value < 0) {
 		if (caster && caster->getPlayer() && target->getSkull() != SKULL_BLACK && target->getPlayer()) {
-			damage.primary.value /= 1;
+			damage.primary.value /= 2;
 		}
 	}
 	if (g_game.combatChangeMana(caster, target, damage)) {
