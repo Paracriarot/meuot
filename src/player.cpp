@@ -482,10 +482,6 @@ void Player::addSkillAdvance(skills_t skill, uint64_t count)
 {
 	uint64_t currReqTries = vocation->getReqSkillTries(skill, skills[skill].level);
 	uint64_t nextReqTries = vocation->getReqSkillTries(skill, skills[skill].level + 1);
-	if (currReqTries >= nextReqTries) {
-		//player has reached max skill
-		return;
-	}
 
 	g_events->eventPlayerOnGainSkillTries(this, skill, count);
 	if (count == 0) {
@@ -1771,8 +1767,6 @@ void Player::addExperience(Creature* source, uint64_t exp, bool sendText/* = fal
 	}
 
 	if (prevLevel != level) {
-		health = healthMax;
-		mana = manaMax;
 
 		updateBaseSpeed();
 		setBaseSpeed(getBaseSpeed());
@@ -1786,7 +1780,7 @@ void Player::addExperience(Creature* source, uint64_t exp, bool sendText/* = fal
 		g_creatureEvents->playerAdvance(this, SKILL_LEVEL, prevLevel, level);
 
 		std::ostringstream ss;
-		ss << "Você avançou do nível " << prevLevel << " para o nível " << level << '.';
+		ss << "Você avançou do Nível " << prevLevel << " para o Nível " << level << '.';
 		sendTextMessage(MESSAGE_EVENT_ADVANCE, ss.str());
 	}
 
@@ -2251,7 +2245,7 @@ Item* Player::getCorpse(Creature* lastHitCreature, Creature* mostDamageCreature)
 	if (corpse && corpse->getContainer()) {
 		std::ostringstream ss;
 		if (lastHitCreature) {
-			ss << "Você reconhece " << getNameDescription() << ". " << (getSex() == PLAYERSEX_FEMALE ? "Ela" : "Ele") << " foi morto por no nível (" << level << ") e reset [" << getReborn() << "] por " << lastHitCreature->getNameDescription() << "e por " << mostDamageCreature->getNameDescription() << '.';
+			ss << "Você reconhece " << getNameDescription() << ". " << (getSex() == PLAYERSEX_FEMALE ? "Ela" : "Ele") << " foi morto por no nível " << level << " e reset " << getReborn() << " por " << lastHitCreature->getNameDescription() << ".";
 		} else {
 			ss << "Você reconhece " << getNameDescription() << '.';
 		}

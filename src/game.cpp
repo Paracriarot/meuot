@@ -4155,7 +4155,7 @@ bool Game::combatChangeHealth(Creature* attacker, Creature* target, CombatDamage
 			TextMessage message;
 			message.position = targetPos;
 			message.primary.value = realHealthChange;
-			message.primary.color = TEXTCOLOR_LIGHTGREY;
+			message.primary.color = TEXTCOLOR_LIGHTGREEN;
 
 			SpectatorHashSet spectators;
 			map.getSpectators(spectators, targetPos, false, true);
